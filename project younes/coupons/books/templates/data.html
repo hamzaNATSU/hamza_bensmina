@@ -1,0 +1,54 @@
+<body style='display: none'>
+<ul{{html|safe}}</ul>
+</body>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js'></script>
+{% csrf_token %}
+<script> 
+    var titles1 = document.getElementsByClassName("course_title");
+    let data = [].map.call(titles1, elem => elem.textContent);
+    // console.log(data);
+    var p = document.querySelectorAll(".col-xs-12 p");
+    var url = document.querySelectorAll(".col-xs-12 p a");
+    var paralist = []
+    let data2 = [].map.call(p, elem => elem.textContent);
+    let data_url = [].map.call(url, elem => elem.getAttribute('href'));
+    for (let i = 0 ; i < data2.length ; i = i + 4 ){
+        var para = data2[i]+' '+data2[i+1]+ ' ' + data2[i+2] + ' '+data2[i+3]; 
+        paralist.push(para);
+    }
+    // console.log(paralist)
+    var p = document.querySelectorAll(".col-xs-12 a img");
+    let data3 = [].map.call(p, elem => elem.getAttribute('data-lazy-src'));
+    var list_dict_data = [];
+	for ( let i = 0 ; i < data.length  ; i++){
+		
+        var dict_data = {'title':data[i],'description':paralist[i],'img':data3[i],'url':data_url[i]}
+		list_dict_data.push(dict_data);
+		
+	}
+    console.log(list_dict_data)
+	 var csrftoken = $("[name=csrfmiddlewaretoken]").val();
+	 $.ajax({
+        type: "POST",
+        url: '/update_item',
+        data: {
+            "data": JSON.stringify(list_dict_data),
+			"data2":'hi',
+			"csrfmiddlewaretoken":csrftoken,
+        },
+        dataType: "json",
+        success: function (data) {
+            console.log('hello');
+            location.replace('');
+
+            // any process in data
+        },
+        failure: function () {
+            location.href('');
+        }
+    });
+</script>
+</html>
+
+<!-- This website is like a Rocket, isn't it? Performance optimized by WP Rocket. Learn more: https://wp-rocket.me -->
+

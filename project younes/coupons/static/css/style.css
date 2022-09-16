@@ -1,0 +1,144 @@
+*{
+  padding:0;
+  margin:0;
+}
+body {
+    background-color:#1B1414;
+    color:rgba(255, 255, 255, 0.877);
+  }
+ 
+header{
+  background:#1F86FF;
+  height: 100px;
+  display:flex;
+  justify-content:space-between;
+}
+.logo{
+  float:left;
+  height:50%;
+}
+.br{
+  float:right;
+}
+.inpu{
+  width: 55%;
+  margin: 22px auto 0px auto;
+}
+.inpu input{
+  border-radius: 5px;
+    background-color: #fff;
+    box-shadow: rgb(0 0 0 / 16%) 0 2px 2px 0, rgb(0 0 0 / 8%) 0 0 0 1px;
+    border-style: hidden;
+    padding-left: 10px;
+    height: 34px;
+}
+.inpu input:focus{
+  outline: 0;
+  background: #fff;
+  border-color: rgb(0 0 0 / 16%) 0 2px 2px 0, rgb(0 0 0 / 8%) 0 0 0 1px;
+  -moz-box-shadow: 0 0 5px #00b2ff;
+  -webkit-box-shadow: 0 0 5px #00b2ff;
+  box-shadow: 0 0 5px #00b2ff outset;
+}
+.wst input{
+  width: 100%;
+}
+.heder{
+  position:relative;
+  width:100%;
+  height:100vh;
+  background:#1F86FF;
+  display:flex;
+  justify-content: center;
+  align-items :center;
+  overflow:hidden;
+}
+.heder h2{
+  position:relative;
+  color:rgba(255, 255, 255, 0.877);
+  font-size:5em;
+  text-align: center;
+}
+.skew1{
+  position:absolute;
+  bottom:-100%;
+  left:50%;
+  width:100%;
+  height:100%;
+  background:#1B1414;
+  transform:skewY(-15deg);
+  transform-origin :top left;
+}
+.skew2{
+  position:absolute;
+  bottom:-100%;
+  right:50%;
+  width:100%;
+  height:100%;
+  background:#1B1414;
+  transform:skewY(15deg);
+  transform-origin :top right;
+}
+section{
+  padding:100px;
+}
+section h2{
+  color:white;
+  font-size:2em;
+  margin-bottom:10px;
+}
+section p {
+  color: #e4f0ff;
+  font-size: 16px;
+  height: 90px;
+  overflow-wrap: break-word;
+  overflow: hidden;
+  text-align: center;
+  margin-top:7px; 
+}
+.card{
+  height: 354px;
+  background:#312a2a;
+  border-radius:5px;
+  width: 283px;
+  margin-bottom: 22px;
+}
+li{
+  list-style: none;
+}
+.lists{
+  display:flex;
+  justify-content: space-between;
+  display: flex;
+  flex-wrap: wrap;
+}
+.card img{
+  width:100%;
+}
+.card h3{
+text-align: center;
+height: 44px;
+overflow:hidden;
+font-size: 19px;
+margin-top: 10px;
+}
+a{
+  text-decoration: none;
+}
+#st{
+  text-align: center;
+}
+.cimg{
+  width: 85%;
+  margin: 15px auto 0 auto;
+}
+.toudemy{
+  color: #e4f0ff;
+  background: #2828d4;
+  text-align: center;
+  padding: 7px 0;
+  display: block;
+  width: 87%;
+  border-radius: 5px;
+  margin: 0 auto 0px;
+}

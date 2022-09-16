@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+  <head>
+    <meta charset='UTF-8'>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+  </head>
+  <body>
+    <!-- <header>
+      <img src="1.jpg" alt="" class="logo">
+      <button class ="br">logiin</button>
+    </header> -->
+    <div class="heder">
+      <div class="wst">
+      <h2>SEARCH COUPON</h2>
+      <div class="inpu">
+      <input type="text" name="" placeholder="SEARCH COURSE..."></div>
+      </div>
+      <span class="skew1"></span>
+      <span class="skew2"></span>
+    </div>
+    <section>
+      <H2 id='st'>ALL COURSES</H2>
+      <ul class="lists">
+      {% for book in books %}
+        <li class="card">
+          <div class='cimg'>
+        <img src="{{book.image_url}}" alt=""></div>
+        <H3>{{ book.title }}</H3>
+        <p>{{ book.description}}</p>
+        <a href="{{book.url}}" class="toudemy">GET ON UDEMY</a>
+        </li>
+      {% endfor %}
+    </ul>
+    </section>
+    <script>
+      const skew1= document.querySelector('.skew1');
+      const skew2= document.querySelector('.skew2');
+      window.addEventListener('scroll',function(){
+        const value1 = -15 + window.scrollY/45;
+        const value2 = 15 + window.scrollY/-45;
+        skew1.style.transform = "skewY(" + value1 + "deg)";
+        skew2.style.transform = "skewY(" + value2 + "deg)";
+      })
+    </script>
+  </body>
+</html>
