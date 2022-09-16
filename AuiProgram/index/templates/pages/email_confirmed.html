@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block style %}
+.btn2{
+cursor: pointer;
+border:none;
+margin: 0 !important;
+transform: translateY(22px);
+padding:10px;
+background-color:black;
+color:white;
+transition:background-color 0.4s
+}
+.btn2:hover{
+    background-color:white;
+    color:black;
+    transition:background-color 0.4s
+}
+footer{
+    position:absolute;
+    bottom: 0;
+    width:100%;
+}
+a{
+    color:blue;
+    decoration:underline;
+    cursor:pointer;
+}
+h1{
+    text-align:center;
+}
+{% endblock style %}
+{% block content %}
+{% load static %}
+<h1 style='margin-top: 110px;'> your email has been confirmed.click <a href="{% url 'aui:index' %}">here</a> to redirect 
+{% endblock content %}

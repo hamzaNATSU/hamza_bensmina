@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% load static %}
+<div style='margin: 100px 0px;' class="thank-you-area">
+    <div class="container">
+        <div class="row justify-content-center align-items-center">
+            <div class="col-md-8">
+                <div class="inner_complated">
+                    <div class="img_cmpted"><img src="{% static 'assets/images/icons/cmpted_logo.png' %}" alt=""></div>
+                    <h4 style='color: green'> [#{{id}}]</h4>
+                    <p class="dsc_cmpted">Thank you for ordering in our store. You will receive a confirmation
+                        email shortly.]</p>
+                    <div class="btn_cmpted">
+                        <a href="{% url 'home:home' %}" class="shop-btn" title="Go To Shop">Continue Shopping </a>
+                    </div>
+                </div>
+                <div class="main_quickorder text-align-center">
+                    <h3 class="title">Cantact Us for any probleme</h3>
+                    <div class="cntct typewriter-effect"><span class="call_desk"><a href="Hamzalxrd@gmail.com" id="typewriter_num">Hamzalxrd@gmail.com</a></span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

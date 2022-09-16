@@ -1,0 +1,12 @@
+
+
+<script>
+    var strWindowFeatures = "location=yes,height=562,width=562,scrollbars=yes,status=yes";
+    {% for el in lastreserv %}
+        /// call your function here
+        
+
+        window.open("http://127.0.0.1:8000{% url 'aui:ResDetails' el.id 'alert' %}", '_blank',strWindowFeatures);
+  {% endfor %}
+    this.window.close();
+  </script> 

@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% block style %}
+.btn2{
+cursor: pointer;
+border:none;
+margin: 0 !important;
+transform: translateY(22px);
+padding:10px;
+background-color:black;
+color:white;
+transition:background-color 0.4s
+}
+.btn2:hover{
+    background-color:white;
+    color:black;
+    transition:background-color 0.4s
+}
+footer{
+    position:absolute;
+    bottom: 0;
+    width:100%;
+}
+{% endblock style %}
+    {% block content %}
+    {% load static %}
+    <div class="container">
+        {%if sent == True %}
+        <div class="alert alert-success" role="alert">
+            We have sent a confirmation email to your mail adress... please check your mailbox!
+          </div>
+        {% endif %}
+          {% if alert == True %}
+        <div class="alert alert-danger" role="alert">
+            Email or password incorrect! please check it again...
+          </div>
+          {% endif %}
+        <form style="margin:40px;" method="POST">
+            {% csrf_token %}
+            <div class="form-group row">
+              <label for="staticEmail" class="col-sm-2 col-form-label">Email</label>
+              <div class="col-sm-5">
+                <input style="width:100%;height:35px;" name="email" type="text" class="form-control" id="staticEmail" value="{{email}}" placeholder="email@example.com">
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="inputPassword" class="col-sm-2 col-form-label">Password</label>
+              <div class="col-sm-5">
+                <input type="password" class="form-control" name="password" id="inputPassword" placeholder="Password">
+              </div>
+            </div>
+            <button class="btn2"  type="submit">change mail address</button>
+          </form>
+</div>
+    {% endblock content %}

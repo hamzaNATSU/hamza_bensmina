@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+{% extends 'base.html' %}
+    {% block content %}
+    {% load static %}
+        <div class="container2">
+            <div class="stats">
+                <div class="title">
+                    <h2>Stats</h2>
+                </div>
+                <div style="margin-left: 29px;" class="small-stats">
+                        <p class="counter">{{counter_expd}}</p>
+                        <p class="counter_title">expired date</p>
+                        <img src="{% static 'img/alert.png' %}" class="icons">
+                </div>
+                <div style="background-color:rgb(25 128 187 / 82%)" class="small-stats">
+                    <p class="counter">{{counter_dev}}</p>
+                    <p class="counter_title">available devices</p>
+                    <img src="{% static 'img/devices.png' %}" class="icons">
+
+                </div>
+                <div style="background-color: #0a560abf;" class="small-stats">
+                    <p class="counter">{{counter_dev2}}</p>
+                    <p class="counter_title">out of stock</p>
+                    <img src="{% static 'img/users.png' %}" style="max-width: 200px;" class="icons">
+                </div>
+            </div>
+            
+            <div class="historique">     
+                <div class="title">
+                    <h2>Historique</h2>
+                </div>  
+                <div class="filter">
+                    <form style="float: left;transform: translateY(-16px);" method="GET">
+                        {{ search_filter.form.as_p }}
+                    </form>
+                    <div class="order_by"> 
+                    <form method="POST">
+                        {% csrf_token %}
+                        <span>Order by :</span>
+                        <select name="order_type" id="select_type">
+                            <option disabled selected>__________</option>
+                            <option value="exp">Expiration date</option>
+                            <option value="expDes">Expiration date (DESC)</option>
+                            <option value="Res">Reservation date</option>
+                            <option value="ResDes">Reservation date (DESC)</option>
+                            <option value="Name">Student Name</option>
+                            <option value="NameDes">Student Name (DESC)</option>
+                        </select>
+                        <button type="submit">apply</button>
+                    </form>
+                    </div>
+                </div>       
+                <table id="table">
+                    <thead>
+                        <td>ID</td>
+                        <td>NAME</td>
+                        <td>Device ID</td>
+                        <td>Device type</td>
+                        <td>Reservation date</td>
+                        <td>Expiration date</td>
+                    </thead>
+                    {%for el in Res %}
+                    {% now "Y-m-d H:i" as todays_date %}
+                    {% if el.Ended == True %}
+                    <tr style = 'background-color:red;font-weight:bold'>
+                        <td>{{el.IDStud}}</td>
+                        <td>{{el.NameStud}}</td>
+                        <td>{{el.Device.SerialDev}}</td>
+                        <td>{{el.Device.typeDev}}</td>
+                        <td>{{el.DateRes|date:'Y-m-d H:i'}}</td>
+                        <td>{{el.DateExp|date:'Y-m-d H:i'}}</td>
+                        <td><a class="link" target="blank" href="{% url 'aui:ResDetails' el.id 'detail' %}">End Reservation</a></td>
+                        
+                        <div style="display : none">
+                       
+                        </div>
+                    </tr>
+                    {%else%}
+                    <tr>
+                        <td>{{el.IDStud}}</td>
+                        <td>{{el.NameStud}}</td>
+                        <td>{{el.Device.SerialDev}}</td>
+                        <td>{{el.Device.typeDev}}</td>
+                        <td>{{el.DateRes|date:'Y-m-d H:i'}}</td>
+                        <td>{{el.DateExp|date:'Y-m-d H:i'}}</td>
+                        <td><a class="link" target="blank" href="{% url 'aui:ResDetails' el.id 'detail' %}">End Reservation</a></td>
+                    </tr>
+                    {% endif %}
+                    {% endfor %}
+                    <script>
+                        var intervalId = window.setInterval(function(){
+                            /// call your function here
+                            var strwindows2 ='toolbar=no,status=no,menubar=no,scrollbars=no,resizable=no,left=-1000, top=-1000, width=5, height=5, visible=none, "';
+window.open("{% url 'aui:alert' %}", '_blank',strwindows2);
+                     
+                    }, 10000);
+                      
+                      </script> 
+        
+                </table>
+            </div>
+        </div>
+        <script>
+           
+            if ('{{order_type}}' != ''){
+            document.getElementById('select_type').value = "{{order_type}}";
+            }
+            if (window.location.href.includes("=")){
+                console.log(window.location.href);
+                document.getElementById('table').scrollIntoView();
+            }
+        </script>
+        {% if isfilter %}
+        <script>
+                console.log(window.location.href);
+                document.getElementById('table').scrollIntoView();
+        </script>
+        {% endif %}
+
+        {% endblock content %}

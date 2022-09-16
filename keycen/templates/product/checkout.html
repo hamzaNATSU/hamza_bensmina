@@ -1,0 +1,196 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% load static %}
+<div class="cover" id="cover">
+<div class="processing">
+    <div class="preloader" id='preloader'>
+        <div class="preloader__ring">
+          <div class="preloader__sector">P</div>
+          <div class="preloader__sector">r</div>
+          <div class="preloader__sector">o</div>
+          <div class="preloader__sector">c</div>
+          <div class="preloader__sector">e</div>
+          <div class="preloader__sector">s</div>
+          <div class="preloader__sector">s</div>
+          <div class="preloader__sector">i</div>
+          <div class="preloader__sector">n</div>
+          <div class="preloader__sector">g</div>
+          <div class="preloader__sector"> </div>
+          <div class="preloader__sector">o</div>
+          <div class="preloader__sector">r</div>
+          <div class="preloader__sector">d</div>
+          <div class="preloader__sector">e</div>
+          <div class="preloader__sector">r</div>
+          <div class="preloader__sector">.</div>
+          <div class="preloader__sector">.</div>
+          <div class="preloader__sector">.</div>
+          <div class="preloader__sector"></div>
+          <div class="preloader__sector"></div>
+          <div class="preloader__sector"></div>
+          <div class="preloader__sector"></div>
+          <div class="preloader__sector"></div>
+          <div class="preloader__sector"></div>
+          <div class="preloader__sector"></div>
+          <div class="preloader__sector"></div>
+          <div class="preloader__sector"></div>
+          <div class="preloader__sector"></div>
+          <div class="preloader__sector"></div>
+        </div>
+        <div class="preloader__ring">
+          <div class="preloader__sector">P</div>
+          <div class="preloader__sector">r</div>
+          <div class="preloader__sector">o</div>
+          <div class="preloader__sector">c</div>
+          <div class="preloader__sector">e</div>
+          <div class="preloader__sector">s</div>
+          <div class="preloader__sector">s</div>
+          <div class="preloader__sector">i</div>
+          <div class="preloader__sector">n</div>
+          <div class="preloader__sector">g</div>
+          <div class="preloader__sector"> </div>
+          <div class="preloader__sector">o</div>
+          <div class="preloader__sector">r</div>
+          <div class="preloader__sector">d</div>
+          <div class="preloader__sector">e</div>
+          <div class="preloader__sector">r</div>
+          <div class="preloader__sector">.</div>
+          <div class="preloader__sector">.</div>
+          <div class="preloader__sector">.</div>
+          <div class="preloader__sector"></div>
+          <div class="preloader__sector"></div>
+          <div class="preloader__sector"></div>
+          <div class="preloader__sector"></div>
+          <div class="preloader__sector"></div>
+          <div class="preloader__sector"></div>
+          <div class="preloader__sector"></div>
+          <div class="preloader__sector"></div>
+          <div class="preloader__sector"></div>
+          <div class="preloader__sector"></div>
+          <div class="preloader__sector"></div>
+        </div>
+      </div>
+    </div>
+</div>
+<div class="checkout-area pt-100px pb-100px">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-7">
+                        <div class="billing-info-wrap">
+                            <h3>Billing Details</h3>
+                            <div class="row">
+                                <div class="col-lg-9 col-md-6">
+                                    <div class="billing-info mb-4">
+                                        <form id='email_form' method="POST">
+                                            {% csrf_token%}
+                                        <label>Email Address</label>
+                                        <p style="font-size:13px;line-height:25px;margin-bottom:30px;">Entrez votre adresse mail. Cette adresse sera utilisée pour vous renseigner sur l'avancement de votre commande.</p>
+                                        {{ getemailform.email_costumer }}
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                    </div>
+                </div>
+                    <div class="col-lg-5 mt-md-30px mt-lm-30px ">
+                        <div class="your-order-area">
+                            <h3>Your order</h3>
+                            <div class="your-order-wrap gray-bg-4">
+                                <div class="your-order-product-info">
+                                    <div class="your-order-top">
+                                        <ul>
+                                            <li>Product</li>
+                                            <li>Total</li>
+                                        </ul>
+                                    </div>
+                                    <div class="your-order-middle">
+                                        <ul>
+                                            {%for item in items%}
+                                            <li>
+                                                <div class="order-middle-left">
+                                                <img src="{{item.product.PRDImg.url}}" style='width:60px;float:left;margin-right:15px;'> 
+                                                <span>{{item.product.PRDName}} X {{item.quantity}}</span>
+                                                </div> <span
+                                                class="order-price">${{item.getTotal}} </span></li>
+                                                {% endfor%}
+                                            </ul>
+                                    </div>
+                                    <div class="your-order-total">
+                                        <ul>
+                                            <li class="order-total">Total</li>
+                                            <li>${{total_price}}</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="payment-method">
+                                    </div>
+                            </div>
+                            <div class="Place-order mt-25">
+                                <a id='fakepay' style='background-color:#fff;padding:0%;' href="#top">
+                                <img src="{% static 'assets/images/wzerty.png'%}" class="angle-up" style='width: 112%;transform: translate(-32px, -14px);display: block;height: 185px;'>
+                                </a>
+                                <div id="paypal-button-container"></div> 
+                                <script>
+                                    document.getElementById('paypal-button-container').style.display = 'none';
+                                    const input = document.querySelector('#input');
+                                    input.dataset.state = 'invalid';
+                                    text = input.value;
+                                    console.log(text);
+                                    if (text.includes("@") && text.includes(".")){
+                                        document.getElementById('paypal-button-container').style.display = 'block';
+                                        document.getElementById('fakepay').style.display = 'none';
+                                    }
+
+input.addEventListener('input', evt => {
+  const value = input.value
+  console.log(value.length);
+  if (value.includes("@") && value.includes(".")){
+    input.dataset.state = 'valid';
+document.getElementById('paypal-button-container').style.display = 'block';
+document.getElementById('fakepay').style.display = 'none';
+}
+else {
+    input.dataset.state = 'invalid';
+    document.getElementById('paypal-button-container').style.display = 'none';
+    document.getElementById('fakepay').style.display = 'block';
+  }
+})
+
+
+                                </script>                                 
+                                <script src="https://www.paypal.com/sdk/js?client-id=AUqEr6tSz7TLobYHPdAlM-h8ICJ7dH4YTEGm2wyc2tgwQpMbJKkTt6kkIzb4sLSZG01Y3XLP7HsuQIvF&currency=USD"></script> <!-- paypal payment script --> 
+                                <script>// Render the PayPal button into #paypal-button-container
+                                    paypal.Buttons({
+                                    
+                                        // Set up the transaction
+                                        createOrder: function(data, actions) {
+                                            return actions.order.create({
+                                                purchase_units: [{
+                                                    amount: {
+                                                        value: '{{total_price}}',
+                                                        currency : 'USD'
+                                                    }
+                                                }]
+                                            });
+                                        },
+                                    
+                                        // Finalize the transaction
+                                        onApprove: function(data, actions) {
+                                            return actions.order.capture().then(function(details) {
+                                                document.getElementById('cover').style.display = 'block';
+                                                document.getElementById("email_form").submit();
+                                                // Show a success message to the buyer
+                                                // alert('Transaction completed by ' + details.payer.name.given_name + '!');
+                                               
+                                            });
+                                        }
+                                    
+                                    
+                                    }).render('#paypal-button-container');</script>                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+          <!-- checkout area end -->
+{% endblock content %}

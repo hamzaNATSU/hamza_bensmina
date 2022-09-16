@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{%block style%}
+table ,tr ,td{
+    border: none;
+}
+footer{
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
+{% endblock style %}
+    {% block content %}
+    {% load static %}
+        <div class="container">
+
+            <h2 class="form_title">Device form</h2>
+          <form class="form_reserv" method="post">
+              {%csrf_token%}
+           <table>
+               <tr>
+            <td><label>Device ID :</label></td>
+            <td>
+              <input name="id" type="text">
+            </td>
+            </tr>
+            <tr>
+                <td><label>Brand :</label></td>
+                <td>
+                  <input name="Brand" type="text">
+                </td>
+                </tr>
+            <tr>
+                <td>
+              <label>Serial Number :</label></td>
+              <td><input name="SerNum" type="text"></td>
+            </tr>
+            <tr>
+                <td>
+              <label>Device type :</label></td><td>
+                    <select class="custom-select" name="type" id="device_type">
+                        <option value="Laptop">Laptop</option>
+                        <option value="Desktop">Desktop</option>
+                        <option value="Mouse">Mouse</option>
+                        <option value="keybord">keybord</option>
+                        <option value="Others">Others</option>
+                    </select>
+            </td>
+            </tr>
+            </table>                    
+            <button class="submitA" type="submit">Add +</button>
+
+
+
+          </form>
+
+        </div>
+{% endblock content %}

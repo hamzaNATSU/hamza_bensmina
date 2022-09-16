@@ -1,0 +1,3 @@
+cd desktop
+cd AuiProgram
+py manage.py runserver

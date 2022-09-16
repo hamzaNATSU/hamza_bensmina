@@ -1,0 +1,457 @@
+{%load static%}
+<!DOCTYPE html>
+<html lang="zxx" dir="ltr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hmart - Product page</title>
+    <meta name="robots" content="index, follow" />
+    <meta name="description" content="Hmart-Smart Product eCommerce html Template">
+    <!-- Favicon -->
+    <link rel="shortcut icon" type="image/x-icon" href="assets/images/favicon.ico" />
+    <!-- CSS
+    ============================================ -->
+    <link rel="stylesheet" href="{% static 'assets/css/bootstrap.min.css'%}" />
+    <link rel="stylesheet" href="{% static 'assets/css/font.awesome.css'%}" />
+    <link rel="stylesheet" href="{% static 'assets/css/pe-icon-7-stroke.css'%}" />
+    <link rel="stylesheet" href="{% static 'assets/css/animate.min.css'%}">
+    <link rel="stylesheet" href="{% static 'assets/css/swiper-bundle.min.css'%}">
+    <link rel="stylesheet" href="{% static 'assets/css/venobox.css'%}">
+    <link rel="stylesheet" href="{% static 'assets/css/jquery-ui.min.css'%}">
+    <!-- Style CSS -->
+    <link rel="stylesheet" href="{% static 'assets/css/style.css'%}">
+    <!-- Minify Version -->
+    <!-- <link rel="stylesheet" href="{% static 'assets/css/plugins.min.css'%}">
+    <link rel="stylesheet" href="{% static 'assets/css/style.min.css'%}"> -->
+    <style>
+      .show2{
+        opacity:1;
+        margin-left : 50%
+      }
+        .button_add{
+          width: 174px;
+          height: 50px;
+          font-size: 19px;
+          background-color: #1cbab7;
+          cursor: pointer;
+          color: white;
+          }
+          #input[data-state="valid"] {
+            border-color: hsl(120, 76%, 50%);
+          }
+          
+          /* Show red borders when filled, but invalid */
+          #input[data-state="invalid"] {
+            border-color: hsl(0, 76%, 50%);;
+          }
+          @import "compass/css3";
+          .paypal-logo {
+            font-family: Verdana, Tahoma;
+            font-weight: bold;
+            font-size: 26px;
+          }
+          .paypal-logo i:first-child {
+            color: #253b80;
+          }
+          .paypal-logo i:last-child {
+            color: #179bd7;
+          }
+          .paypal-button {
+            padding: 15px 30px;
+            border: 1px solid #f93;
+            border-radius: 5px;
+            background-image: linear-gradient(#fff0a8, #f9b421);
+            margin: 0 auto;
+            display: block;
+            min-width: 138px;
+            position: relative;
+          }
+          .paypal-button-title {
+            font-size: 14px;
+            color: #505050;
+            vertical-align: baseline;
+            text-shadow: 0px 1px 0px rgba(255, 255, 255, 0.6);
+          }
+          .paypal-button .paypal-logo {
+            display: inline-block;
+            text-shadow: 0px 1px 0px rgba(255, 255, 255, 0.6);
+            font-size: 20px;
+          }
+          
+          \:root {
+            font-size: calc(16px + (24 - 16)*(100vw - 320px)/ (1280 - 320)); }
+
+          .cover{
+            width: 100%;
+            height: 100%;
+            position: fixed;
+            z-index: 1000;
+            top: 0;
+            background-color: #19191952;
+            display:none;
+          }
+          .preloader {
+            display: flex;
+            position:absolute;
+        }
+        .processing{
+            position: fixed;
+            top: 45%;
+            z-index: 0;
+            left: 38%;
+        }
+
+          .preloader {
+            animation: tiltSpin 8s linear infinite;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            margin: auto;
+            width: 17em;
+            height: 17em; }
+            .preloader, .preloader__ring {
+              transform-style: preserve-3d; }
+            .preloader__ring {
+              animation-name: spin;
+              animation-duration: 4s;
+              animation-timing-function: inherit;
+              animation-iteration-count: inherit;
+              font-size: 2em;
+              position: relative;
+              height: 3rem;
+              width: 1.5rem; }
+              .preloader__ring:nth-child(even) {
+                animation-direction: reverse; }
+            .preloader__sector {
+              font-weight: 600;
+              position: absolute;
+              top: 0;
+              left: 0;
+              text-align: center;
+              text-transform: uppercase;
+              transform: translateZ(7rem); }
+              .preloader__sector, .preloader__sector:empty:before {
+                display: inline-block;
+                width: 100%;
+                height: 100%; }
+              .preloader__sector:empty:before {
+                background: linear-gradient(transparent 45%, currentColor 45% 55%, transparent 55%);
+                content: ""; }
+              .preloader__sector:nth-child(2) {
+                transform: rotateY(12deg) translateZ(7rem); }
+              .preloader__sector:nth-child(3) {
+                transform: rotateY(24deg) translateZ(7rem); }
+              .preloader__sector:nth-child(4) {
+                transform: rotateY(36deg) translateZ(7rem); }
+              .preloader__sector:nth-child(5) {
+                transform: rotateY(48deg) translateZ(7rem); }
+              .preloader__sector:nth-child(6) {
+                transform: rotateY(60deg) translateZ(7rem); }
+              .preloader__sector:nth-child(7) {
+                transform: rotateY(72deg) translateZ(7rem); }
+              .preloader__sector:nth-child(8) {
+                transform: rotateY(84deg) translateZ(7rem); }
+              .preloader__sector:nth-child(9) {
+                transform: rotateY(96deg) translateZ(7rem); }
+              .preloader__sector:nth-child(10) {
+                transform: rotateY(108deg) translateZ(7rem); }
+              .preloader__sector:nth-child(11) {
+                transform: rotateY(120deg) translateZ(7rem); }
+              .preloader__sector:nth-child(12) {
+                transform: rotateY(132deg) translateZ(7rem); }
+              .preloader__sector:nth-child(13) {
+                transform: rotateY(144deg) translateZ(7rem); }
+              .preloader__sector:nth-child(14) {
+                transform: rotateY(156deg) translateZ(7rem); }
+              .preloader__sector:nth-child(15) {
+                transform: rotateY(168deg) translateZ(7rem); }
+              .preloader__sector:nth-child(16) {
+                transform: rotateY(180deg) translateZ(7rem); }
+              .preloader__sector:nth-child(17) {
+                transform: rotateY(192deg) translateZ(7rem); }
+              .preloader__sector:nth-child(18) {
+                transform: rotateY(204deg) translateZ(7rem); }
+              .preloader__sector:nth-child(19) {
+                transform: rotateY(216deg) translateZ(7rem); }
+              .preloader__sector:nth-child(20) {
+                transform: rotateY(228deg) translateZ(7rem); }
+              .preloader__sector:nth-child(21) {
+                transform: rotateY(240deg) translateZ(7rem); }
+              .preloader__sector:nth-child(22) {
+                transform: rotateY(252deg) translateZ(7rem); }
+              .preloader__sector:nth-child(23) {
+                transform: rotateY(264deg) translateZ(7rem); }
+              .preloader__sector:nth-child(24) {
+                transform: rotateY(276deg) translateZ(7rem); }
+              .preloader__sector:nth-child(25) {
+                transform: rotateY(288deg) translateZ(7rem); }
+              .preloader__sector:nth-child(26) {
+                transform: rotateY(300deg) translateZ(7rem); }
+              .preloader__sector:nth-child(27) {
+                transform: rotateY(312deg) translateZ(7rem); }
+              .preloader__sector:nth-child(28) {
+                transform: rotateY(324deg) translateZ(7rem); }
+              .preloader__sector:nth-child(29) {
+                transform: rotateY(336deg) translateZ(7rem); }
+              .preloader__sector:nth-child(30) {
+                transform: rotateY(348deg) translateZ(7rem); }
+          
+          /* Animations */
+          @keyframes tiltSpin {
+            from {
+              transform: rotateY(0) rotateX(30deg); }
+            to {
+              transform: rotateY(1turn) rotateX(30deg); } }
+          
+          @keyframes spin {
+            from {
+              transform: rotateY(0); }
+            to {
+              transform: rotateY(1turn); } }
+          
+  
+    </style>
+
+    <script>
+        var qnt; 
+        function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                console.log('no')
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+        
+                    // Does this cookie string begin with the name we want?
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+            function uuidv4(){
+                return 'xxxxxxxx-xxxx-4xxx-xxxxxxxxxxxxx'.replace(/[xy]/g,function(c)
+                {
+                    var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+                    return v.toString(16);
+                });
+            }
+            var device = getCookie('device'); 
+            if (device == null || device == undefined){
+                device = uuidv4();
+            }
+           
+            document.cookie = 'device=' + device + ';domain;path=/'
+
+
+    </script>
+</head>
+
+<body>
+    <div class="main-wrapper">
+        <header>
+            <!-- Header top area start -->
+            <div class="header-top">
+                <div class="container">
+                    <div class="row justify-content-between align-items-center">
+                        <div class="col">
+                            <div class="welcome-text">
+                                <p><strong>SPECIAL OFFER: +50% DISCOUNT TODAY ONLY
+                                </strong></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Header top area end -->
+            <!-- Header action area start -->
+            <div class="header-bottom  d-none d-lg-block">
+                <div class="container">
+                    <div class="row justify-content-between align-items-center">
+                        <div class="col-lg-3 col">
+                            <div class="header-logo">
+                                <a href="{% url 'home:home' %}"><img style='width:160px;' src="{% static 'assets/images/logo/logo2.png'%}" alt="Site Logo" /></a>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 d-none d-lg-lock">
+                            <div style="display:block;" class="search-element">
+                                {% if search_filter %}
+                                <form method="GET">
+                                    {{ search_filter.form.as_p }}
+                                    <button type='submit'><i class="pe-7s-search"></i></button>
+                                </form>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col">
+                            <div class="header-actions">
+                                <!-- Single Wedge Start -->
+                                <!-- Single Wedge End -->
+                                <a href="#offcanvas-cart" class="header-action-btn header-action-btn-cart offcanvas-toggle pr-0">
+                                    <i class="pe-7s-shopbag"></i>
+                                    <span class="header-action-num">{{items|length}}</span>
+                                    {% if total_price != 0 %}
+                                    <span style='color: #bfb1b1;' class="cart-amount">${{total_price}}</span> 
+                                    {% endif %}
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Header action area end -->
+            <!-- Header action area start -->
+            <div class="header-bottom d-lg-none sticky-nav style-1">
+                <div class="container">
+                    <div class="row justify-content-between align-items-center">
+                        <div class="col-lg-3 col">
+                            <div class="header-logo">
+                                <a href="{% url 'home:home' %}"><img style='width:140px;' src="{% static 'assets/images/logo/logo2.png'%}" alt="Site Logo" /></a>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 d-none d-lg-block">
+                            <div class="search-element">
+                                <form action="#">
+                                    <input type="text" placeholder="Search" />
+                                    <button><i class="pe-7s-search"></i></button>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col">
+                            <div class="header-actions">
+                              <button class="search_button" onclick="showSearch();"><i class="pe-7s-search"></i></button>
+                                <a href="#offcanvas-cart" class="header-action-btn header-action-btn-cart offcanvas-toggle pr-0">
+                                    <i class="pe-7s-shopbag"></i>
+                                    <span class="header-action-num">{{items|length}}</span>
+                                    {% if total_price != 0 %}
+                                    {% comment %} <span style="color:white;" class="cart-amount">${{total_price}}</span>  {% endcomment %}
+                                    {% endif %}
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Header action area end -->
+            <!-- header navigation area start -->
+
+                            
+            <!-- header navigation area end -->
+            <div class="mobile-search-box d-lg-none">
+                <div class="container">
+                    <!-- mobile search start -->
+                    <div style='display:none;' id="seachbar" class="search-element max-width-100">
+                        <form action="#">
+                          {{ search_filter.form.as_p }}
+                          <button><i class="pe-7s-search"></i></button>
+                        </form>
+                    </div>
+                    <script>
+                      function showSearch(){
+                      var search = document.getElementById('seachbar')
+                      if (search.style.display == 'block'){
+                        search.style.display = 'none';
+                      }
+                      else{
+                        search.style.display = 'block';
+                      }
+                    }
+                    </script>
+                    <!-- mobile search start -->
+                </div>
+            </div>
+        </header>
+        <!-- OffCanvas Cart Start -->
+        <div id="offcanvas-cart" class="offcanvas offcanvas-cart">
+            <div class="inner">
+                <div class="head">
+                    <span class="title">Cart</span>
+                    <button class="offcanvas-close ">×</button>
+                </div>
+                <div class="body customScroll">
+                    <ul class="minicart-product-list">
+                        {% for item in items %}
+                        <li>
+                            <a href="single-product.html" class="image"><img src="{{item.product.PRDImg.url}}" alt="Cart product Image"></a>
+                            <div class="content">
+                                <a href="single-product.html" class="title">{{item.product.PRDName}}</a>
+                                <span class="quantity-price">{{item.quantity}} x <span class="amount">{{item.getTotal}}</span></span>
+                                <a style='cursor:pointer;' data-product={{item.product.id}} data-action="remove" class="remove update-cart">×</a>
+                            </div>
+                        </li>
+                        {%endfor%}
+                    </ul>
+                </div>
+                <div class="foot">
+                    <div class="buttons mt-30px">
+                        <a href="{% url 'home:checkout' %}" class="btn btn-outline-dark current-btn">checkout</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- OffCanvas Cart End -->
+        <!--block start-->
+        {% block content %}
+        {% endblock content %}
+        <!--block end-->
+        <!-- Footer Area Start -->
+
+        <div class="footer-bottom">
+            <div class="container">
+                <div class="line-shape-top line-height-1">
+                    <div class="row flex-md-row-reverse align-items-center">
+                        <div class="col-md-6 text-center text-md-end">
+                            <div class="payment-mth"><a href="#"><img class="img img-fluid" src="{% static 'assets/images/icons/payment.png'%}" alt="payment-image"></a></div>
+                        </div>
+                        <div class="col-md-6 text-center text-md-start">
+                            
+                              
+                                   <strong style='color:white;'> Copyright 2021 © <a>KEYCEN</a> </strong></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Footer Area End -->
+<!-- Modal Cart -->    
+{% block modal %}
+{% endblock modal %}
+<!-- Global Vendor, plugins JS -->
+<!-- JS Files
+============================================ -->
+<script src="{% static 'assets/js/vendor/bootstrap.bundle.min.js'%}"></script>
+<script src="{% static 'assets/js/vendor/jquery-3.6.0.min.js'%}"></script>
+<script src="{% static 'assets/js/vendor/jquery-migrate-3.3.2.min.js'%}"></script>
+<script src="{% static 'assets/js/vendor/modernizr-3.11.2.min.js'%}"></script>
+<script src="{% static 'assets/js/plugins/jquery.countdown.min.js'%}"></script>
+<script src="{% static 'assets/js/plugins/scrollUp.js'%}"></script>
+<script src="{% static 'assets/js/plugins/venobox.min.js'%}"></script>
+<script src="{% static 'assets/js/plugins/jquery-ui.min.js'%}"></script>
+<script src="{% static 'assets/js/plugins/mailchimp-ajax.js'%}"></script>
+<script src="{% static 'assets/js/plugins/swiper-bundle.min.js'%}"></script>
+<script src="{% static 'assets/js/main.js'%}"></script>
+<form>
+    {% csrf_token %}
+</from>
+<script>
+    const csrftoken = document.querySelector('input[name=csrfmiddlewaretoken]').value;
+    console.log(csrftoken)
+</script>
+<script src="{% static 'assets/js/cart.js'%}"></script>
+
+
+<!-- Minify Version -->
+<!-- <script src="{% static 'assets/js/vendor.min.js'%}"></script>
+<script src="{% static 'assets/js/plugins.min.js'%}"></script>
+<script src="{% static 'assets/js/main.min.js'%}"></script> -->
+
+<!--Main JS (Common Activation Codes)-->
+</body>
+
+</html>

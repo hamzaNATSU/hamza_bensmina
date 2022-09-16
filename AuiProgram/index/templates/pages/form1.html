@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+{%block style%}
+table ,tr ,td{
+    border: none;
+}
+footer{
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
+{% endblock style %}
+{% block content %}
+{% load static %}
+        <div class="container">
+
+            <h2 class="form_title">Reservation form</h2>
+          <form class="form_reserv" method="post">
+           {% csrf_token %}
+            <table>
+               <tr>
+            <td><label>Student ID :</label></td>
+            <td>
+              <input name="ID" type="text">
+            </td>
+            </tr>
+            <tr>
+                <td>
+              <label>Student NAME :</label></td>
+              <td><input name="this_name" type="text"></td>
+            </tr>
+            <tr>
+                <td>
+              <label>Device :</label></td><td>
+                <select class="custom-select" name="select_1">
+                    <option value="selected" disabled selected>choose Device ...</option>
+                    <optgroup label="Laptop" style="font-size: 16px;">
+                        {% for dev in devicess %}
+                    {% if dev.typeDev == 'Laptop' %}
+                    <option value="{{dev.IDDev}}">{{dev.SerialDev}}</option>
+                    </optgroup>
+                    {% endif %}
+                    {% endfor %}
+                    <optgroup label="Desktop" style="font-size: 16px;">
+                     {% for dev in devicess %}
+                    {% if dev.typeDev == 'Desktop' %}
+                    <option value="{{dev.IDDev}}">{{dev.SerialDev}}</option>
+                    
+                    {% endif %}
+                    {% endfor %}
+                </optgroup>
+                    <optgroup label="Mouse" style="font-size: 16px;">
+                    {% for dev in devicess %}
+                    {% if dev.typeDev == 'Mouse' %}
+                    <option value="{{dev.IDDev}}">{{dev.SerialDev}}</option>
+                    
+                    {% endif %}
+                    {% endfor %}
+                </optgroup>
+                    <optgroup label="keybord" style="font-size: 16px;">
+                    {% for dev in devicess %}
+                    {% if dev.typeDev == 'keybord' %}
+                    <option value="{{dev.IDDev}}">{{dev.SerialDev}}</option>
+                    {% endif %}
+                    {% endfor %}
+                </optgroup>
+                    <optgroup label="Others" style="font-size: 16px;">
+                    {% for dev in devicess %}
+                    {% if dev.typeDev == 'Others' %}
+                    <option value="{{dev.IDDev}}">{{dev.SerialDev}}</option>
+                   
+                    {% endif %}
+                    {% endfor %}
+                </optgroup>
+                </select>
+            </td>
+            </tr>
+            <tr>
+                <td><label>Duration(Day) :</label></td>
+                <td>
+                  <input name="Duration" type="date">
+                </td>
+                </tr>
+            </table>                    
+            <button class="submitR" type="submit">Reserve >></button>
+
+
+
+          </form>
+
+        </div>
+        {% endblock content%}

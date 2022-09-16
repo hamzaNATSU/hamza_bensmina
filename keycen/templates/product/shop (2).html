@@ -1,0 +1,193 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% load static %}
+       <!-- Shop Page Start  -->
+        <div class="shop-category-area pt-100px pb-100px">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <!-- Shop Top Area Start -->
+                        <div class="shop-top-bar d-flex">
+                            <!-- Left Side End -->
+                            <div class="shop-tab nav">
+                                <button class="active" data-bs-target="#shop-grid" data-bs-toggle="tab">
+                                    <i class="fa fa-th" aria-hidden="true"></i>
+                                </button>
+                                <button data-bs-target="#shop-list" data-bs-toggle="tab">
+                                    <i class="fa fa-list" aria-hidden="true"></i>
+                                </button>
+                            </div>
+                            <!-- Right Side Start -->
+
+                            <!-- Right Side End -->
+                        </div>
+                        <!-- Shop Top Area End -->
+                        <!-- Shop Bottom Area Start -->
+                        <div class="shop-bottom-area">
+                            <!-- Tab Content Area Start -->
+                            <div class="row">
+                                <div class="col">
+                                    <div class="tab-content">
+                                        <div class="tab-pane fade show active" id="shop-grid">
+                                            <div class="row mb-n-30px">
+
+                                                {% for product in list_product %}
+                                                <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-xs-6 mb-30px">
+                                                    <!-- Single Prodect -->
+                                                    <div class="product">
+                                                        <span class="badges">
+                                                        <span class="new">New</span>
+                                                        </span>
+                                                        <div class="thumb">
+                                                            <a style="cursor:pointer;" data-link-action="quickview" title="Quick view" data-bs-toggle="modal" data-bs-target="#exampleModal{{product.id}}" class="image quickview">
+                                                                <img src="{{product.PRDImg.url}}" alt="Product" />
+                                                                <img class="hover-image" src="{{product.PRDImg.url}}" alt="Product" />
+                                                            </a>
+                                                        </div>
+                                                        <div class="content">
+                                                
+                                                            <h5 class="title"><a href="single-product.html">{{product.PRDName}}
+                                                                </a>
+                                                            </h5>
+                                                            <span class="price">
+                                                            <span class="new">${{product.PRDPrice}}</span>
+                                                            </span>
+                                                        </div>
+                                                        <div class="actions">
+                                                            <button data-product={{product.id}} data-action="add" title="Add To Cart" class="action add-to-cart update-cart"><i
+                                                                class="pe-7s-shopbag"></i></button>
+                                                            <button class="action quickview" data-link-action="quickview" title="Quick view" data-bs-toggle="modal" data-bs-target="#exampleModal{{product.id}}"><i class="pe-7s-look"></i></button>
+                                                           
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                {% endfor %}
+                                            </div>
+                                        </div>
+                                        <div class="tab-pane fade mb-n-30px" id="shop-list">
+                                            {% for product in list_product %}
+                                            <div class="shop-list-wrapper mb-30px">
+                                                <div class="row">
+                                                    <div class="col-md-5 col-lg-5 col-xl-4 mb-lm-30px">
+                                                        <div class="product">
+                                                            <div class="thumb">
+                                                                <a style="cursor:pointer;" data-link-action="quickview" title="Quick view" data-bs-toggle="modal" data-bs-target="#exampleModal{{product.id}}" class="image quickview">
+                                                                    <img src="{{product.PRDImg.url}}" alt="Product" />
+                                                                    <img class="hover-image" src="{{product.PRDImg.url}}" alt="Product" />
+                                                                </a>
+                                                                <span class="badges">
+                                                                <span class="sale">-10%</span>
+                                                                <span class="new">New</span>
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-7 col-lg-7 col-xl-8">
+                                                        <div class="content-desc-wrap">
+                                                            <div class="content">
+                                                                <h5 class="title"><a href="single-product.html">{{product.PRDName}} </a></h5>
+                                                                <p>{{product.PRDDesc|safe}}</p>
+                                                            </div>
+                                                            <div class="box-inner">
+                                                                <span class="price">
+                                                                <span class="old">${{product.PRDPrice}}</span>
+                                                                <span class="new">${{product.PRDCost}}</span>
+                                                                </span>
+                                                                <div class="actions">
+                                                                    <button data-product={{product.id}} data-action="add" title="Add To Cart" class="action add-to-cart update-cart"><i
+                                                                        class="pe-7s-shopbag"></i></button>
+                                                        
+                                                                    <button class="action quickview" data-link-action="quickview" title="Quick view" data-bs-toggle="modal" data-bs-target="#exampleModal{{product.id}}"><i class="pe-7s-look"></i></button>
+                                                        
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Tab Content Area End -->
+                        </div>
+                        <!-- Shop Bottom Area End -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    <!-- Shop Page End  -->
+        {% endblock content %}
+
+        {% block modal %}        
+        {% for product in list_product %}
+    <div class="modal modal-2 fade" id="exampleModal{{product.id}}" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <button style='padding: 3px;background: #1cbab7b0;font-size: 58px;color: black;border: 1px solid black;' type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"> <i class="pe-7s-close"></i></button>
+                        <div class="row">
+                            <div class="col-lg-6 col-sm-12 col-xs-12 mb-lm-30px mb-md-30px mb-sm-30px">
+                                <!-- Swiper -->
+                                <div class="swiper-container gallery-top">
+                                    <div class="swiper-wrapper">
+                                        <div class="swiper-slide">
+                                            <img class="img-responsive m-auto" src="{{product.PRDImg.url}}" alt="">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-sm-12 col-xs-12" data-aos="fade-up" data-aos-delay="200">
+                                <div class="product-details-content quickview-content">
+                                    <h2>{{product.PRDName}}</h2>
+                                    <div class="pricing-meta">
+                                        <ul class="d-flex">
+                                            <li class="new-price">${{product.PRDPrice}}</li>
+                                        </ul>
+                                    </div>
+
+                                        <div class="pro-details-quality">
+                                            <div style='width:50%' class="input-group mb-3"> <span style="cursor:pointer" onclick="cartPlus('{{product.id}}');" class="input-group-text minplus">+</span> <input type="text" class="quantity_value" id='quantity' name='qnt{{product.id}}' value="1"> <span style="cursor:pointer" onclick="CartMinus('{{product.id}}');" class="input-group-text minplus">-</span> </div>
+                                           <button data-product={{product.id}} data-action="add"  class="add-cart button_add update-cart">ADD TO CART</button>
+                                        </div>
+                                        <button id='checkout{{product.id}}' onclick="location.replace('/checkout')" class="add-cart button_checkout update-cart">CHECKOUT</button>
+                                        <p class="mt-30px">{{product.PRDDesc|safe}}</p>
+
+                                    </div>
+                                    <script>
+                                        function cartPlus(a){
+                                            var i = document.getElementsByName('qnt'+a)[0].value; 
+                                            var t = parseInt(i);
+                                            t++;
+                                            document.getElementsByName('qnt'+a)[0].setAttribute('value',t);
+                                            console.log(qnt);
+                                            qnt = t;
+                                            console.log(qnt);
+                                        }
+                        
+                                        function CartMinus(b){
+                                            var i = document.getElementsByName('qnt'+b)[0].value; i = parseInt(i);
+                                            if (i > 1){
+                                            i--;
+                                            document.getElementsByName('qnt'+b)[0].setAttribute('value',i);
+                                            qnt = i
+                                            }
+                                        }
+                                    </script>
+                                    </div>
+                                    <div class="payment-img">
+                                        <a href="#"><img src="{% static 'assets/images/icons/payment.png'%}" alt=""></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </div>
+    </div>
+            {% endfor %}
+        {% endblock modal %}
