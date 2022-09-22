@@ -1,0 +1,351 @@
+{% extends 'base.html' %}
+
+    {% block content %}
+    {% load static %}
+    {% load crispy_forms_tags %}
+    <main class="main">              
+
+    <!-- BEGIN SHOP -->
+    <div class="shop wrapper">
+        <div class="shop__cols">
+
+            <!-- BEGIN LEFT COLUMN -->
+            <aside class="shop__left">
+            <!--- *********************** filters ********************* -->
+                <form method="GET" >
+                    <div class="search-form">
+                        {{ search_filter.form.as_p }}
+                        <button class="search-form__button" type="submit"></button>
+                    </div>
+                </form>
+                <form method="GET">
+                    <div class="filters">
+                    <section class="widget js-slidedown">
+                        <h2 class="widget__title widget__title_hide-mob">Categories</h2>
+                        <div class="widget__hide js-slidedown-hide">
+                            <ul class="side-nav">
+                                <li class="side-nav__item">
+                                    <a class="side-nav__link js-line-link" href="{% url 'home:shop' '0' %}">All</a>
+                                </li>
+                                {% for Cat in Parent %}
+                                <li class="side-nav__item">
+                                    <a class="side-nav__link js-line-link" href="{% url 'home:shop' Cat.id %}">{{Cat.PRDCat}}</a>
+                                </li>
+                                 {% endfor %}
+                            </ul>
+                        </div>
+                    </section>
+                    <section>
+                        <h3 class="widget__title widget__title_hide-mob">Price</h3>
+                        {% crispy product_filter.form %}
+                    </section>
+                    <section class="widget js-more js-slidedown">
+                        <h3 class="widget__title widget__title_hide-mob">Colors</h3>
+                        <a class="widget__button js-slidedown-button" href="javascript:void(0);">Colors</a>
+                        <div class="widget__hide js-slidedown-hide">
+                            <div class="checkboxes">
+                                {{brand_filter.form.as_p}}                                     
+                            </div>
+                        </div>
+                    </section>
+                    <button type="submit" class="apply-button button">
+                        <span class="button__text">Apply filter</span>
+                    </button> 
+                    </div>
+                </form>                                  
+
+                <div class="desktop-items js-from-2">
+                    <div class="side-items js-content-2">
+                        <section class="widget">
+                            <h3 class="widget__title">Reviewed by you</h3>
+                            <div class="short-reviews">
+                                {% for PRD in rvds %}
+                                <article class="reviewed">
+                                    <div class="reviewed__cols">
+                                        <div class="reviewed__left w-50">
+                                            <!-- <a class="reviewed__image-bg" href=""> -->
+                                                <img class="reviewed__image" src="{{ PRD.Product.PRDImg.url }}" alt="">                          
+                                            </a>
+                                        </div>
+                                        <div class="reviewed__right">
+                                            <h4 class="reviewed__title">
+                                                <a class="reviewed__link" href="">{{ PRD.Product.PRDName}}</a>
+                                            </h4>
+                                            <span class="reviewed__price">${{PRD.Product.PRDPrice}}</span>
+                                            <span class="reviewed__old-price">${{PRD.Product.PRDCost}}</span>
+                                        </div>                                        
+                                    </div>
+                                </article>
+                                {% endfor %}
+                    </div>
+                </div>
+
+            </aside>
+            <!-- LEFT COLUMN END -->  
+            
+            <!-- BEGIN RIGHT COLUMN -->
+            <div class="shop__right">
+
+                <div class="shop-panel">
+                    <div class="shop-panel__left">
+                        <span class="shop-panel__text">There are <b>67</b> products in&nbsp;this&nbsp;category</span>
+                    </div>
+                    <div class="shop-panel__right">
+                        <div class="shop-panel__select select select_1">
+                            <select class="js-formstyler">
+                                <option>By relevance</option>
+                                <option>By relevance</option>
+                                <option>By relevance</option>
+                                <option>By relevance</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="product-tab js-tabs-content" id="products-0">
+                        <div class="inner-catalog">
+                                {% for product in product_list_all %}
+                               {% if product in brand_filtred %}   
+                                <article class="short-item">
+                                    <div class="short-item__all">
+                                        {% if user.is_authenticated %}<a href="{% url 'home:product' product.id %}" ></a>{% else %}<a href="{% url 'home:product' product.id %}" >  {% endif %} </a>
+                                            <img class="short-item__image" style="width: 265px;height: 255px;object-fit: inherit;" src="{{product.PRDImg.url}}" alt="">
+                                        </a>
+                                        <div class="short-item__top">
+                                            <div class="short-item__cols">
+                                                <div class="short-item__col">
+                                                {% if product.PRDCost > 0 %}
+                                                    <span class="item-tag item-tag_red">Sale</span>
+                                                {% else %}
+                                                {% endif %}
+                                                {% if product in Product_new %}
+                                                    <span class="item-tag item-tag_green">New</span>
+                                                {% else %}
+                                                {% endif %}
+                                                </div>
+                                                <div class="short-item__col">
+                                                    {% if product in FVRT %}
+                                                    <button data-action="defavorite"  data-product={{product.id}} id="fav-button" onclick="fav_defav()" class="heart-button js-toggle-active update-cart active"></button>
+                                                    {% else  %}
+                                                    <button data-action="favorite" data-product={{product.id}} id="fav-button" onclick="fav_defav()" class="heart-button js-toggle-active update-cart"></button>
+                                                    {% endif %}
+                                                </div>                                        
+                                            </div>
+                                        </div>
+                                        {% if user.is_authenticated %}
+                                        <h4 class="short-item__title">
+                                            {% if user.is_authenticated %}<a class="short-item__link" href="{% url 'home:product' product.id %}">{{product.PRDName}}</a> {% else %}<a class="short-item__link" href="{% url 'home:product' product.id %}">{{product.PRDName}} {% endif %}</a>
+                                        </h4>
+                                        {% else %}
+                                        <h4 class="short-item__title">
+                                            <a class="short-item__link" href="{% url 'login' %}">{{product.PRDName}}</a>
+                                        </h4>
+                                        {% endif %}
+                                        <span class="short-item__price">{{product.PRDPrice}} $</span>
+                                    </div>
+                                </article> 
+                                 {% else %}
+                                {% endif %}                            
+                            {% endfor %}  
+                        </div>
+                        {% for contact in page_obj %}
+                        {# Each "contact" is a Contact model object. #}
+                        {{ contact.full_name|upper }}<br>
+                        ...
+                    {% endfor %}
+                    <div class="page-nav">
+                        {% if product_list_all.has_previous %}
+                        <div class="page-nav__col">
+                            <a class="page-nav__button prev-button" href="?page={{ product_list_all.previous_page_number }}"></a>
+                        </div>
+                        {% else %}
+                        <div class="page-nav__col">
+                        </div>
+                        {% endif %}
+                        <div class="page-nav__col">
+                            <ul class="page-nav__list">
+                            {% for pages in product_list_all.paginator.page_range %}
+                                {% if product_list_all.number == pages %}
+                                <li class="page-nav__item active">
+                                    <a class="page-nav__link" href="#">{{pages}}</a>
+                                </li>
+                                {% else %}
+                                <li class="page-nav__item ">
+                                    <a class="page-nav__link" href="?page={{pages}}">{{pages}}</a>
+                                </li>
+                                {% endif %}
+                            {% endfor %}
+                                                                                  
+                            </ul>
+                        </div>
+                        {% if product_list_all.has_next %}
+                        <div class="page-nav__col">
+                            <a class="page-nav__button next-button" href="?page={{ product_list_all.next_page_number }}"></a>
+                        </div> 
+                        {% else %}
+                        <div class="page-nav__col">
+                        </div> 
+                        {% endif %}                                               
+                    </div>
+                </div>
+                {% for Cat in Parent %}
+                 <div class="product-tab js-tabs-content" id="products-{{Cat.id}}">
+                    <div class="inner-catalog">
+                    {%for Cat2 in Cat_Sec%}
+                    {% if Cat2.PRDCat_Parent == Cat %}
+                                    {% for product in product_filter.qs %}
+                                    {% if product in brand_filtered %}
+                                        {% if product.PRDCat == Cat2 %}
+                                            <article class="short-item">
+                                                <div class="short-item__all">
+                                                    <a  href="{% url 'home:product' product.id %}"></a>
+                                                        <img class="short-item__image" src="{{product.PRDImg.url}}" alt="">
+                                                    </a>
+                                                    <div class="short-item__top">
+                                                        <div class="short-item__cols">
+                                                            <div class="short-item__col">
+                                                                {% if product.PRDCost > 0 %}
+                                                                <span class="item-tag item-tag_red">Sale</span>
+                                                                {% else %}
+                                                                {% endif %}
+                                                                {% if product in Product_new %}
+                                                                <span class="item-tag item-tag_green">New</span>
+                                                                {% else %}
+                                                                {% endif %}
+                                                            </div>
+                                                            <div class="short-item__col">
+                                                                {% if product in FVRT %}
+                                                                <button data-action="defavorite"  data-product={{product.id}} id="fav-button" onclick="fav_defav()" class="heart-button js-toggle-active update-cart active"></button>
+                                                                {% else  %}
+                                                                <button data-action="favorite" data-product={{product.id}} id="fav-button" onclick="fav_defav()" class="heart-button js-toggle-active update-cart"></button>
+                                                                {% endif %}                                                            </div>                                        
+                                                        </div>
+                                                    </div>
+                                                    <h4 class="short-item__title">
+                                                        {% if user.is_authenticated %}<a class="short-item__link"  href="{% url 'home:product' product.id %}"> {% else %} <a class="short-item__link" href="{% url 'login' %}">{% endif %}{{product.PRDName}}</a>
+                                                    </h4>
+                                                    <span class="short-item__price">{{product.PRDPrice}} $</span>
+                                                </div>
+                                            </article>
+                                        {% else %}
+                                        {% endif %} 
+                                        {% else %}
+                                        {% endif %}
+                                {% endfor %} 
+                    {% else %} 
+                    {% endif %}
+                    {% endfor %} 
+                </div>
+                {% for contact in page_obj %}
+                {# Each "contact" is a Contact model object. #}
+                {{ contact.full_name|upper }}<br>
+                ...
+            {% endfor %}
+            <div class="page-nav">
+                {% if product_list.has_previous %}
+                <div class="page-nav__col">
+                    <a class="page-nav__button prev-button" href="?page={{ product_list.previous_page_number }}"></a>
+                </div>
+                {% else %}
+                <div class="page-nav__col">
+                </div>
+                {% endif %}
+                <div class="page-nav__col">
+                    <ul class="page-nav__list">
+                    {% for pages in product_list.paginator.page_range %}
+                        {% if product_list.number == pages %}
+                        <li class="page-nav__item active">
+                            <a class="page-nav__link" href="#">{{pages}}</a>
+                        </li>
+                        {% else %}
+                        <li class="page-nav__item ">
+                            <a class="page-nav__link" href="?page={{pages}}">{{pages}}</a>
+                        </li>
+                        {% endif %}
+                    {% endfor %}
+                                                                          
+                    </ul>
+                </div>
+                {% if product_list.has_next %}
+                <div class="page-nav__col">
+                    <a class="page-nav__button next-button" href="?page={{ product_list.next_page_number }}"></a>
+                </div> 
+                {% else %}
+                <div class="page-nav__col">
+                </div> 
+                {% endif %}                                               
+            </div>
+                </div>            
+                {% endfor %}
+
+ 
+
+            </div>
+            <!-- RIGHT COLUMN END -->                
+
+        </div>
+
+        <div class="mob-items js-to-2"></div>
+     
+    </div>
+    <!-- SHOP END -->
+
+    <!-- BEGIN NEWSLETTER -->
+    {% if user.is_authenticated %}
+    <aside class="newsletter">
+        <div class="newsletter__banner" >
+            <div class="newsletter__main" >
+                <div class="newsletter__bg" style="background: linear-gradient(45deg, black, transparent);">
+                    <div class="newsletter__max">
+                        <h4 class="newsletter__title text-light">Newsletter</h4>
+                        <p class="newsletter__text text-light">Be the first to hear about deals,  offers and upcoming collections.</p>
+                        <form method="POST" >
+                            {% csrf_token %}
+                            <div class="newsletter-form">
+                                <div class="newsletter-form__left">
+                                    {{ Email_add }}
+                                </div>
+                                <div class="newsletter-form__right">
+                                    <button class="newsletter-form__button button">
+                                        <span class="button__text">Subscribe</span>
+                                    </button>
+                                </div>                                        
+                            </div>
+                        </form>
+                    </div>
+                    <img class="newsletter__vector" src="{% static 'img/svg/vector-newsletter.svg' %}" alt="">
+                </div>
+            </div>
+        </div>
+    </aside>
+    {% endif %}
+    <!-- NEWSLETTER END -->
+
+</main>
+
+<script>
+$(function () {
+		$(".js-tabs-link").live("click", function (e) {
+			if ($(this).closest(".js-tabs-item.active").length < 1) {
+				if ($(this).is("a")) {
+					e.preventDefault();
+				}
+				$(this)
+					.closest(".js-tabs-item")
+					.addClass("active")
+					.siblings(".js-tabs-item")
+					.removeClass("active");
+				var curHref = $(this).attr("href") || $(this).attr("data-href");
+				$(curHref)
+					.addClass("active")
+					.siblings(".js-tabs-content")
+					.removeClass("active");
+			} else {
+				if ($(this).is("a")) {
+					e.preventDefault();
+				}
+			}
+		});
+	});
+</script>
+{{Cat_active|safe}}
+{% endblock content %}

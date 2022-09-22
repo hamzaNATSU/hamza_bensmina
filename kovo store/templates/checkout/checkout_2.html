@@ -1,0 +1,378 @@
+{% extends "base.html" %}
+        <!-- BEGIN MAIN -->
+        {% block content %}
+
+<main class="main">              
+
+
+    <!-- BEGIN CHECKOUT -->
+    <div class="checkout-page wrapper">
+
+        <div class="checkout-nav">
+            <div class="checkout-nav__item active">
+                <span class="checkout-nav__text">order details</span>
+            </div>
+            <div class="checkout-nav__item active current">
+                <span class="checkout-nav__text">payment method</span>
+            </div>
+            <div class="checkout-nav__item">
+                <span class="checkout-nav__text">finish</span>
+            </div>                                        
+        </div>
+
+        <div class="checkout-page__cols">
+
+            <!-- BEGIN LEFT COLUMN -->
+            <div>
+                
+
+                    <section>
+                        <h2 class="checkout-form__title">payment method</h2>
+                        <div class="payment">
+                            <div class="payment__list">
+                                <!--    -->
+                                <div id='radio_1' class="payment__radio radio">
+                                    <label onclick="showAT(document.getElementById('tab2'))" class="radio__label">
+                                        <input class="radio__input" name="payment" type="radio" checked>
+                                        <span class="radio__icon"></span>
+                                        <span class="radio__text">Stripe</span>
+                                    </label>
+                                </div>  
+                                <div id='radio_2' class="payment__radio radio">
+                                    <label onclick="showAT(document.getElementById('tab3'));" class="radio__label">
+                                        <input class="radio__input" name="payment" type="radio">
+                                        <span class="radio__icon"></span>
+                                        <span class="radio__text">PayPal</span>
+                                    </label>
+                                </div>
+                                <div id='radio_3' class="payment__radio radio">
+                                    <label onclick="showAT(document.getElementById('tab1'));" class="radio__label">
+                                        <input class="radio__input" name="payment" type="radio">
+                                        <span class="radio__icon"></span>
+                                        <span class="radio__text">payment cash</span>
+                                    </label>
+                                </div>    
+                            </div>
+                        </div>
+                     <div id="tab1" class="card" >
+                        <div class="checkout-form__buttons mt-100">
+                            <div class="checkout-form__button-col">
+                                <a class="checkout-form__back back-button" href="#">return</a>
+                            </div>
+                            <div class="checkout-form__button-col">
+                                <button class="checkout-form__button button" >
+                                    <a href="{% url 'pay:on_cash' %}" class="button__text">confirm order</a>
+                                </button>
+                            </div>                                    
+                        </div> 
+                       <!-- <div class="card"  >
+                            <div class="card__left">
+                                <div class="card-form">
+                                    <label class="card-form__label" for="card-number">Сard number</label>
+                                    <input class="card-form__input text-input js-mask-card" id="card-number" type="text" placeholder="xxxx-xxxx-xxxx-xxxx">
+                                    <label class="card-form__label" for="card-date">Expiration date</label>
+                                    <div class="card-form__cols">
+                                        <div class="card-form__col">
+                                            <input class="card-form__input text-input js-mask-date" id="card-date" type="text" placeholder="mm">                                                      
+                                        </div>
+                                        <div class="card-form__col">
+                                            <input class="card-form__input text-input js-mask-date" type="text" placeholder="yy">                                                      
+                                        </div>                                                
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card__right">
+                                <div class="card-form">
+                                    <div class="card-form__code">
+                                        <label class="card-form__label card-form__label_grey" for="card-code">Secret code</label>
+                                        <input class="card-form__cvv round-input js-mask-code" id="card-code" type="text" placeholder="cvv">  
+                                    </div>                                            
+                                </div>
+                            </div>                                 
+                        </div> 
+                    -->
+                    </div> 
+                        <script src="https://js.stripe.com/v3/"></script> 
+                        <div id="tab2" class="card">
+                            <h2 style="text-align: center; padding-bottom: 0;"><i class="fab fa-stripe fa-2x"></i></h2>
+                            <div class="strip-form" id="payment-form">
+                                <div id="card-element"><!--Stripe.js injects the Card Element--></div>
+                                <button type="button" class="stripe-button"  id="submit">
+                                  <div class="spinner hidden" id="spinner"></div>
+                                  <span id="button-text">Pay ${{order.get_total|floatformat:2 }}</span>
+                                </button>
+                                <span  style="text-align: center; font-size: 18px;margin-left: 50%;font-weight: bolder;" >Or</span>
+                                      <button class="btn-stripe w-100" id="checkout" >Pay Online <i class="fal fa-chevron-circle-right fa-lg"></i>
+                                      </button>
+                                <p id="card-error" role="alert"></p>
+                                <p class="result-message hidden">
+                                  Payment succeeded, see the result in your
+                                  <a href="" target="_blank">Stripe dashboard.</a> Refresh the page to pay again.
+                                </p>
+                            </div>                   
+                        </div> 
+                        <script>
+                            // A reference to Stripe.js initialized with your real test publishable API key.
+                            var stripe = Stripe("pk_test_51J7rnpCoVF7w6k3XxQWmRLTx9gcXs3y0t4iw100OFppPlkme6aOkLRfCzBjhhvYeBRroXwbXnYPDbpTgKJsdwzxR00NgxcZ7LG");
+
+                            // The items the customer wants to buy
+                            var purchase = {
+                            items: [{ id: "xl-tshirt" }]
+                            };
+
+                            // Disable the button until we have Stripe set up on the page
+                            document.querySelector("button").disabled = true;
+                            fetch("/create-payment-intent", {
+                            method: "POST",
+                            headers: {
+                                "Content-Type": "application/json"
+                            },
+                            body: JSON.stringify(purchase)
+                            })
+                            .then(function(result) {
+                                return result.json();
+                            })
+                            .then(function(data) {
+                                var elements = stripe.elements();
+
+                                var style = {
+                                base: {
+                                    color: "#32325d",
+                                    fontFamily: 'Arial, sans-serif',
+                                    fontSmoothing: "antialiased",
+                                    fontSize: "16px",
+                                    "::placeholder": {
+                                    color: "#32325d"
+                                    }
+                                },
+                                invalid: {
+                                    fontFamily: 'Arial, sans-serif',
+                                    color: "#fa755a",
+                                    iconColor: "#fa755a"
+                                }
+                                };
+
+                                var card = elements.create("card", { style: style });
+                                // Stripe injects an iframe into the DOM
+                                card.mount("#card-element");
+
+                                card.on("change", function (event) {
+                                // Disable the Pay button if there are no card details in the Element
+                                document.querySelector("button").disabled = event.empty;
+                                document.querySelector("#card-error").textContent = event.error ? event.error.message : "";
+                                });
+
+                                var form = document.getElementById("payment-form");
+                                form.addEventListener("submit", function(event) {
+                                event.preventDefault();
+                                // Complete payment when the submit button is clicked
+                                payWithCard(stripe, card, data.clientSecret);
+                                });
+                            });
+
+                            // Calls stripe.confirmCardPayment
+                            // If the card requires authentication Stripe shows a pop-up modal to
+                            // prompt the user to enter authentication details without leaving your page.
+                            var payWithCard = function(stripe, card, clientSecret) {
+                            loading(true);
+                            stripe
+                                .confirmCardPayment(clientSecret, {
+                                payment_method: {
+                                    card: card
+                                }
+                                })
+                                .then(function(result) {
+                                if (result.error) {
+                                    // Show error to your customer
+                                    showError(result.error.message);
+                                } else {
+                                    // The payment succeeded!
+                                    orderComplete(result.paymentIntent.id);
+                                }
+                                });
+                            };
+
+                            /* ------- UI helpers ------- */
+
+                            // Shows a success message when the payment is complete
+                            var orderComplete = function(paymentIntentId) {
+                            loading(false);
+                            document
+                                .querySelector(".result-message a")
+                                .setAttribute(
+                                "href",
+                                "https://dashboard.stripe.com/test/payments/" + paymentIntentId
+                                );
+                            document.querySelector(".result-message").classList.remove("hidden");
+                            document.querySelector("button").disabled = true;
+                            };
+
+                            // Show the customer the error from Stripe if their card fails to charge
+                            var showError = function(errorMsgText) {
+                            loading(false);
+                            var errorMsg = document.querySelector("#card-error");
+                            errorMsg.textContent = errorMsgText;
+                            setTimeout(function() {
+                                errorMsg.textContent = "";
+                            }, 4000);
+                            };
+
+                            // Show a spinner on payment submission
+                            var loading = function(isLoading) {
+                            if (isLoading) {
+                                // Disable the button and show a spinner
+                                document.querySelector("button").disabled = true;
+                                document.querySelector("#spinner").classList.remove("hidden");
+                                document.querySelector("#button-text").classList.add("hidden");
+                            } else {
+                                document.querySelector("button").disabled = false;
+                                document.querySelector("#spinner").classList.add("hidden");
+                                document.querySelector("#button-text").classList.remove("hidden");
+                            }
+                            };
+
+                        </script>
+                        <div class="card" id="tab3">
+                            <h2 style="text-align:center;" ><i class="fab fa-paypal"></i> </h2>
+                            <div class="w-75 ml-2 ">
+                            <div id="paypal-button-container"></div>                                  
+                            </div>
+                        </div>
+                    <script src="https://www.paypal.com/sdk/js?client-id=test&currency=USD"></script> <!-- paypal payment script --> 
+                    <script>// Render the PayPal button into #paypal-button-container
+                        paypal.Buttons({
+                        
+                            // Set up the transaction
+                            createOrder: function(data, actions) {
+                                return actions.order.create({
+                                    purchase_units: [{
+                                        amount: {
+                                            value: '{{ order.get_total|floatformat:2 }}',
+                                            currency : 'USD'
+                                        }
+                                    }]
+                                });
+                            },
+                        
+                            // Finalize the transaction
+                            onApprove: function(data, actions) {
+                                return actions.order.capture().then(function(details) {
+                                    // Show a success message to the buyer
+                                    location.href = 'paypalpay/';
+                                    // alert('Transaction completed by ' + details.payer.name.given_name + '!');
+                                   
+                                });
+                            }
+                        
+                        
+                        }).render('#paypal-button-container');</script>                                      
+           
+
+            </div>
+            <!-- LEFT COLUMN END -->
+
+            <!-- BEGIN RIGHT COLUMN -->
+            <aside class="checkout-page__right">
+                <section class="your-order">
+                    <h3 class="your-order__title">Your order</h3>
+                    <div class="side-cart">
+                        {% for item in items %}
+                        <article class="side-cart__item">
+                            <div class="side-cart__cols">
+                                <div class="side-cart__left">
+                                    <a class="side-cart__image-link" href="{% url 'home:product' item.product.id %}">
+                                        <img class="side-cart__image" src="{{item.product.PRDImg.url}}" alt="">
+                                    </a>
+                                </div>
+                                <div class="side-cart__right">
+                                    <h4 class="side-cart__title">
+                                        <a class="side-cart__link" href="{% url 'home:product' item.product.id %}">{{item.product.PRDName}}</a>
+                                    </h4>
+                                    <span class="side-cart__text">x{{item.quantity}}</span>
+                                    <div class="side-cart__prices">
+                                        <span class="side-cart__price">{{item.product.PRDPrice}}</span>
+                                        <span class="side-cart__old-price">{{item.product.PRDCost}}</span>
+                                    </div>
+                                </div>                                        
+                            </div>
+                        </article> 
+                        {% endfor %}                              
+                    </div>
+                    <ul class="your-order__list">
+                        <li class="your-order__item">
+                            <div class="your-order__col">
+                                <span class="your-order__text">Оrder price</span>
+                            </div>
+                            <div class="your-order__col">
+                                <span class="your-order__price">${{order.getCart_total}}</span>
+                            </div>                                
+                        </li>
+                        <li class="your-order__item">
+                            <div class="your-order__col">
+                                <span class="your-order__text">Discount for promo&nbsp;code</span>
+                            </div>
+                            <div class="your-order__col">
+                                <span class="your-order__text">No</span>
+                            </div>                                
+                        </li>
+                        <li class="your-order__item">
+                            <div class="your-order__col">
+                                <span class="your-order__text">Delivery&nbsp;&nbsp;<span>(Aug 02 at 16:00)</span></span>
+                            </div>
+                            <div class="your-order__col">
+                                <span class="your-order__price">${{order.getdelivery|floatformat:2 }}</span>
+                            </div>                                
+                        </li>                                                        
+                    </ul>
+                    <div class="your-order__bottom">
+                        <div class="your-order__col">
+                            <span class="your-order__bottom-text">Total</span>
+                        </div>
+                        <div class="your-order__col">
+                            <span class="your-order__bottom-price">${{order.get_total|floatformat:2 }}</span>
+                        </div>                            
+                    </div>
+                </section>                        
+            </aside>
+            <!-- RIGHT COLUMN END -->                    
+
+        </div>              
+
+    </div>
+    <!-- CHECKOUT END -->           
+
+</main>
+
+<script>
+    function showAT(a){
+        var tab1=document.getElementById("tab1");
+        var tab2=document.getElementById("tab2");
+        var tab3=document.getElementById("tab3");
+            if (a==tab1){
+                tab2.style.display = 'none';
+                tab3.style.display = 'none';
+                tab1.style.display = 'block';
+                document.getElementById("")
+            }
+            else {
+            if (a==tab2){
+                tab2.style.display = 'block';
+                tab3.style.display = 'none';
+                tab1.style.display = 'none';
+
+            }
+            else{
+                tab2.style.display = 'none';
+                tab1.style.display = 'none';
+                tab3.style.display = 'block';
+                tab3.style.width = '600px';
+            }
+        }
+
+        }
+
+
+
+
+</script>
+{% endblock content %}

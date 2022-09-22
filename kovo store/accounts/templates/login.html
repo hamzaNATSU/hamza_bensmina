@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% block content %}
+<main class="main">     
+        <form method="post" action="{% url 'login' %}">
+        {% csrf_token %}
+        <div class="login-form">
+            <div class="login-form__top">
+                <h2 class="login-form__title">Login with</h2>
+                <p class="login-form__text">For your convenience, we have made it possible to log in via social networks.</p>
+            </div>
+            <ul class="socials-nav">
+                <li class="socials-nav__item">
+                    <a class="socials-nav__link socials-nav__link_icon-1" href="#"></a>
+                </li>
+                <li class="socials-nav__item">
+                    <a class="socials-nav__link socials-nav__link_icon-2" href="#"></a>
+                </li>  
+                <li class="socials-nav__item">
+                    <a class="socials-nav__link socials-nav__link_icon-3" href="#"></a>
+                </li>
+                <li class="socials-nav__item">
+                    <a class="socials-nav__link socials-nav__link_icon-4" href="#"></a>
+                </li>                                                                       
+            </ul>
+            <input class="text-input" name="username" type="text" placeholder="Enter your username">
+            <input class="text-input" name="password" type="password" placeholder="Enter your password">
+            <div class="login-form__bottom">
+                <div class="login-form__col">
+                    <div class="login-form__checkbox checkbox">
+                        <label class="checkbox__label">
+                            <input class="checkbox__input" type="checkbox">
+                            <span class="checkbox__icon"></span>
+                            <span class="checkbox__text">Remember me</span>
+                        </label>
+                    </div>                                        
+                </div>
+                <div class="login-form__col">
+                    <span class="login-form__small-text"> 
+                        <a href="{% url 'accounts:signup' %}">Don't have account? Sign up
+                        </a>
+                    </span>
+                </div>                                    
+            </div>
+            <button class="login-form__button button" type="submit">
+                <span class="button__text">Log in</span>
+            </button>
+        </div>
+        {% if err == True %}
+        <ul class="messages">
+            <li>username or password is incorrect!</li>
+        </ul>
+        {% else %}
+        {% endif %}
+        </form>
+
+        {# Assumes you setup the password_reset view in your URLconf #}
+        <p><a href="{% url 'password_reset' %}">Reset password</a></p>
+</main>
+{% endblock content %}

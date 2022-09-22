@@ -1,0 +1,114 @@
+{% extends "base.html" %}
+        <!-- BEGIN MAIN -->
+        {% block content %}
+        <main class="main">
+        {% load static %}
+
+            <!-- BEGIN WISHLIST -->
+            <div class="wishlist-page wrapper">
+
+                <div class="wishlist">
+                    {% for PRD in FVRT %}
+                    <article class="wishlist__item js-remove">
+                        <div class="wishlist__cols">
+                            <div class="wishlist__left">
+                                <a class="wishlist__image-link" href="#">
+                                    <img class="wishlist__image" src="{{PRD.PRDImg.url}}" alt="">
+                                </a>
+                            </div>
+                            <div class="wishlist__right">
+                                <div class="wishlist__top">
+                                    <div class="wishlist__col">
+                                        <h2 class="wishlist__title">
+                                            <a class="wishlist__link" href="#">{{PRD.PRDName}}</a>
+                                        </h2>
+                                    </div>
+                                    <div class="wishlist__col">
+                                        <button onclick="location.reload();" data-action="defavorite" data-product={{PRD.id}} class="wishlist__remove remove-button js-remove-button update-cart"></button>  
+                                    </div>                                    
+                                </div>
+                                <div class="wishlist__bottom">
+                                    <div class="wishlist__col">
+                                        <div class="wishlist-info">
+                                            <div class="wishlist-info__col">
+                                                <span class="wishlist-info__label">Article:</span>
+                                                <span class="wishlist-info__text">000000{{PRD.id}}</span>
+                                            </div>
+                                            <div class="wishlist-info__col">
+                                                <span class="wishlist-info__label">Status:</span>
+                                                <span class="wishlist-info__text">
+                                                    {% if PRD.isinstock %}
+                                                    <span class="green">IN STOCK</span>
+                                                    {% else %}
+                                                    <span class="red" style="color:red">OUT STOCK</span>
+                                                    {% endif %}
+                                                </span>                                        
+                                            </div>                                    
+                                        </div>
+                                    </div>
+                                    <div class="wishlist__col">
+                                        <span class="wishlist__old-price">${{PRD.PRDCost}}</span>
+                                        <span class="wishlist__price">${{PRD.PRDPrice}}</span>                                        
+                                    </div>
+                                    <div class="wishlist__col">
+                                        <a data-action='add' data-product={{PRD.id}} class="wishlist__add add-button update-cart" href="{% url 'home:Cart' %}">add to cart</a>
+                                    </div>                                                                        
+                                </div>
+                            </div>   
+                        </div>                                                                 
+                    </article>  
+                   {% endfor %}                                                    
+                </div>
+
+                <div class="wishlist-page__bottom">
+                    <div class="wishlist-page__col">
+                        <button data-action="removeATFAV" data-product="1" onclick="location.reload();" class="wishlist-page__button button update-cart ">
+                            <span class="button__text">Clear wishlist</span>
+                        </button>
+                    </div>
+                    <div class="wishlist-page__col">
+                        <div class="wishlist-page__checkbox checkbox">
+                            <label class="checkbox__label">
+                                <input class="checkbox__input" type="checkbox">
+                                <span class="checkbox__icon"></span>
+                                <span class="checkbox__text">Show in stock only</span>
+                            </label>
+                        </div>                        
+                    </div>                    
+                </div>
+
+            </div>
+            <!-- WISHLIST END -->
+
+            <!-- BEGIN NEWSLETTER -->
+            <aside class="newsletter">
+                <div class="newsletter__banner" >
+                    <div class="newsletter__main" >
+                        <div class="newsletter__bg" style="background: linear-gradient(45deg, black, transparent);">
+                            <div class="newsletter__max">
+                                <h4 class="newsletter__title text-light">Newsletter</h4>
+                                <p class="newsletter__text text-light">Be the first to hear about deals,  offers and upcoming collections.</p>
+                                <form method="POST" >
+                                    {% csrf_token %}
+                                    <div class="newsletter-form">
+                                        <div class="newsletter-form__left">
+                                            {{ Email_add }}
+                                        </div>
+                                        <div class="newsletter-form__right">
+                                            <button class="newsletter-form__button button">
+                                                <span class="button__text">Subscribe</span>
+                                            </button>
+                                        </div>                                        
+                                    </div>
+                                </form>
+                            </div>
+                            <img class="newsletter__vector" src="{% static 'img/svg/vector-newsletter.svg' %}" alt="">
+                        </div>
+                    </div>
+                </div>
+            </aside>
+            <!-- NEWSLETTER END -->            
+
+        </main>
+        <!-- MAIN END -->
+        {% endblock content %}

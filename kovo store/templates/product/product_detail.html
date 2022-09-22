@@ -1,0 +1,231 @@
+{% extends 'base.html' %}
+     {% block content %}
+        {% load static %}
+        <main class="main" >
+            <!-- BEGIN PRODUCT CARD -->
+            <section class="product wrapper">
+                <div class="product__cols">
+
+                    <!-- BEGIN LEFT COLUMN -->
+                    <div class="product__left">
+                        <div class="product__mob js-to-3"></div>
+                        <div class="product-gallery">
+                            <div class="product-gallery__top">
+                                <div class="product-gallery__cols">
+                                    <div class="product-gallery__col">   
+                                        {% if Product_detail.PRDCost > 0 %}
+                                            <div class="product-gallery__tag">
+                                                <span class="item-tag item-tag_red">Sale</span>
+                                            </div>
+                                        {% else %}
+                                        {% endif %}
+                                        {% if Product_detail in Product_new %}
+                                            <div class="product-gallery__tag">
+                                                <span class="item-tag item-tag_green">New</span>
+                                            </div>
+                                        {% else %}
+                                        {% endif %}
+                                    </div>
+                                    <div class="product-gallery__col">
+                                        {% if Product_detail in FVRT %}
+                                        <button data-action="defavorite" data-product={{Product_detail.id}} id="fav-button"  onclick="location.reload()" class="favorite-button js-toggle-active update-cart active"></button>
+                                        {% else %}
+                                        <button data-action="favorite" data-product={{Product_detail.id}} id="fav-button" onclick="location.reload()" class="favorite-button js-toggle-active update-cart"></button>
+
+                                        {% endif %}
+                                    </div>                                
+                                </div>
+                            </div>
+                            <div class="product-slider loaded js-product-slider dots-2 dots-left">
+                                <div class="product-slider__item">
+                                    <a class="product-slider__link" href="{{Product_detail.PRDImg.url}}" data-fancybox="gallery">
+                                        <img class="product-slider__image" src="{{Product_detail.PRDImg.url}}" alt="">
+                                    </a>
+                                </div>
+                                <div class="product-slider__item">
+                                    <a class="product-slider__link" href="{{product_imgs.PRDImg2.url}}" data-fancybox="gallery">
+                                        {% if PRDImgs != None %}
+                                            <img class="product-slider__image" src="{{product_imgs.PRDImg2.url}}" alt="">
+                                        {% else %}
+                                            <img class="product-slider__image" src="https://via.placeholder.com/486x500" alt="">
+                                        {% endif %}
+                                    </a>
+                                </div>
+                                <div class="product-slider__item">
+                                    <a class="product-slider__link" href="https://via.placeholder.com/486x500" data-fancybox="gallery">
+                                    {% if PRDImgs != None %}
+                                        <img class="product-slider__image" src="{{product_imgs.PRDImg3.url}}" alt="">
+                                    {% else %}
+                                        <img class="product-slider__image" src="https://via.placeholder.com/486x500" alt="">
+                                    {% endif %}
+                                    </a>
+                                </div>                                                        
+                            </div>
+                        </div>
+                    </div>
+                    <!-- LEFT COLUMN END -->
+
+                    <!-- BEGIN RIGHT COLUMN -->
+                    <div class="product__right">
+                        <div class="product__content">
+                            <div class="product__desktop js-from-3">
+                                <div class="product__top js-content-3">
+                                    <h2 class="product__title">{{Product_detail.PRDName}}</h2>
+                                    <div class="product-rating">
+                                        <div class="product-rating__col">
+                                            <div class="product-rating__stars rating rating_medium">
+                                                <input class="star" name="product-rating" type="radio" disabled>
+                                                <input class="star" name="product-rating" type="radio" disabled>
+                                                <input class="star" name="product-rating" type="radio" disabled>
+                                                <input class="star" name="product-rating" type="radio" disabled>
+                                                <input class="star" name="product-rating" type="radio" checked disabled>                          
+                                            </div>                                     
+                                        </div>
+                                        <div class="product-rating__col">
+                                            <span class="product-rating__text">3 customers left feedback</span>
+                                        </div>                                
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- <p class="product__text">Stylish shirt from the Fashionee collection. Model made made&nbsp;of high-quality fabric, pleasant to the touch.</p> -->
+                            <ul class="chars">
+                                <li class="chars__item">
+                                    <span class="chars__name">Status:</span>
+                                    <span class="chars__text">
+                                        {% if Product_detail.isinstock %}
+                                        <span class="chars__status">IN STOCK</span>
+                                        {% else %}
+                                        <span class="chars__status" style="color:red">OUT STOCK</span>
+                                        {% endif %}
+                                    </span>
+                                </li>
+                                <li class="chars__item">
+                                    <span class="chars__name">Article:</span>
+                                    <span class="chars__text">0000{{Product_detail.id}}</span>
+                                </li>                        
+                            </ul>
+                            <div class="product__prices">
+                                <span class="product__price">{{Product_detail.PRDPrice}}$</span>
+                                <span class="product__old-price">{{Product_detail.PRDCost}}$</span>
+                            </div>
+                            <ul class="size">
+                                 {% for var in variants %}
+                                <li class="size__item">
+                                    <label id='update-variant' class="size__label">
+                                        <input  onclick="update_variant('{{var.id}}')" id='update-variant' type="radio"  class="size__input" name="size"></input>
+                                        <span class="size__bg"></span>
+                                        <span class="size__text">{{var.VRTName}}</span>
+                                    </label>
+                                </li>
+                                {% endfor %}                                        
+                            </ul>                        
+                        </div>
+                        <div class="product-add">
+                            <div class="product-add__col">
+                                <div class="product-add__count count js-count">
+                                    <button data-product={{Product_detail.id}} data-action="remove"  class="count__button count__button_minus js-count-minus update-cart"></button>
+                                    {% if items != None %}
+                                    <input class="count__input js-count-input" type="text" value="{{items.quantity}}" maxlength="4">
+                                    {% else %}
+                                    <input class="count__input js-count-input" type="text" value="1" maxlength="4">
+                                    {% endif %}
+                                    <button data-product={{Product_detail.id}} data-action="add"  class="count__button count__button_plus js-count-plus update-cart"></button>
+                                </div>
+                            </div>
+                            <div class="product-add__col">
+                                {% if user.is_authenticated %}
+                                <button data-product={{Product_detail.id}} data-action="add" class="product-add__button button update-cart">
+                                    <a href="{% url 'home:Cart' %}" class="button__text">Add to cart</a>
+                                </button>
+                                {% else %}
+                                <button data-product={{Product_detail.id}} data-action="add" class="product-add__button button update-cart">
+                                    <a href="{% url 'login' %}" class="button__text">Add to cart</a>
+                                </button>
+                                {% endif %}
+                            </div>                        
+                        </div>
+                    </div>
+                    <!-- RIGHT COLUMN END -->
+
+                </div>
+                <img class="product__vector" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=" data-lazy="{% static 'img/svg/vector-product.svg' %}" alt="">
+            </section>
+            <!-- PRODUCT CARD END -->
+
+            <!-- BEGIN PRODUCT TABS -->
+            <div class="product-tabs wrapper">
+
+                <div class="product-nav tabs-nav js-line">
+                    <ul class="product-nav__list tabs-nav__list tabs-nav__list_left">
+                        <li class="tabs-nav__item js-tabs-item js-line-item">
+                            <a class="tabs-nav__link js-line-link js-tabs-link" href="#product-tab-1">Description</a>
+                        </li>
+                    </ul>
+                    <div class="tabs-nav__line js-line-element"></div>
+                </div>
+
+                <!-- BEGIN DESCRIPTION -->
+                <div class="product-tab js-tabs-content" id="product-tab-1">
+                    {{Product_detail.PRDDesc|safe}}
+                </div>
+                <!-- DESCRIPTION END -->              
+
+            </div>
+            <!-- PRODUCT TABS END -->
+
+            <!-- BEGIN BEST SELLERS -->
+             <section class="main-block wrapper">
+                <div class="catalog-slider js-catalog loaded">
+                    <div class="catalog-slider__list-wrap">
+                        <div class="catalog-slider__list js-catalog-carousel">
+
+                            {%for alt in Product_detail.PRDALT.all %}
+                            <article class="short-item">
+                                <div class="short-item__all">
+                                        <img class="short-item__image" src="{{alt.PRDImg.url}}" alt="">
+                                    </a>
+                                    <div class="short-item__top">
+                                        <div class="short-item__cols">
+                                            <div class="short-item__col">
+                                                <span class="item-tag item-tag_red">Sale</span>
+                                                <span class="item-tag item-tag_green">New</span>
+                                            </div>
+                                            <div class="short-item__col">
+                                                <button class="heart-button js-toggle-active"></button>
+                                            </div>                                        
+                                        </div>
+                                    </div>
+                                    <h4 class="short-item__title">
+                                        {% if user.is_authenticated %}
+                                        <a class="short-item__link" href="{% url 'home:product' alt.id %}">{{alt.PRDName}}</a>
+                                        {% else %}
+                                        <a class="short-item__link" href="{% url 'login' %}">{{alt.PRDName}}</a>
+                                        {% endif %}
+                                    </h4>
+                                    <span class="short-item__price">{{alt.PRDPrice}}$</span>
+                                    <span class="short-item__old-price">{{alt.PRDCost}}$</span>
+                                </div>
+                            </article> 
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div class="catalog-slider__cols">
+                        <div class="catalog-slider__col">
+                            <button class="prev-button js-catalog-prev"></button>
+                        </div>
+                        <div class="catalog-slider__col dots-2 js-catalog-dots">
+                                               
+                        </div>
+                        <div class="catalog-slider__col">
+                            <button class="next-button js-catalog-next"></button>
+                        </div>                                                
+                    </div>
+                    <div class="load-icon"></div>
+                    <img class="catalog-slider__bg" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=" data-lazy="{% static 'img/svg/vector-catalog.svg' %}" alt="">
+                </div>
+            </section>
+            <!-- BEST SELLERS END -->
+
+        </main>
+        <!-- MAIN END -->
+        {% endblock content %}

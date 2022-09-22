@@ -1,0 +1,268 @@
+{% extends "base.html" %}
+    {% block content %}
+
+
+    <main class="main">
+        <!-- BEGIN CHECKOUT -->
+        <div class="checkout-page wrapper">
+
+            <div class="checkout-nav">
+                <div class="checkout-nav__item active current">
+                    <span class="checkout-nav__text">order details</span>
+                </div>
+                <div class="checkout-nav__item">
+                    <span class="checkout-nav__text">payment method</span>
+                </div>
+                <div class="checkout-nav__item">
+                    <span class="checkout-nav__text">finish</span>
+                </div>                                        
+            </div>
+
+            <div class="checkout-page__cols">
+
+                <!-- BEGIN LEFT COLUMN -->
+                <div class="checkout-page__left">
+                    {% if warning == True %}
+                    <div id='disp' class="overlay">
+                        <div class="popup">
+                          <h2>incorrect informations</h2>
+                          <button class="close" onclick="closeAt()">&times;</button>
+                          <div class="content">
+                            something wrong! please check out your informations
+                          </div>
+                        </div>
+                      </div>                      
+                    {% else %}
+                    {% endif %}
+                    <form method="POST">
+
+                        {% csrf_token %}
+                        <section class="checkout-form">
+                            <h2 class="checkout-form__title">Contact person</h2>
+                            <div class="checkout-form__cols">
+                                <div class="checkout-form__col">
+                                    {{ addressForm.Fullname }}
+                                </div>
+                                <div class="checkout-form__col">
+                                    <div class="col-sm-9 text-secondary">
+                                        {{profile.user.email}}
+                                      </div>
+                                </div>                                    
+                            </div>
+                            <div class="checkout-form__cols w-75">
+                                    {{ addressForm.phone }}                              
+                            </div>     
+                            <div class="checkout-form__checkboxes">
+                                <div class="checkout-form__checkbox checkbox">
+                                    <label class="checkbox__label">
+                                        <input class="checkbox__input" type="checkbox" required>
+                                        <span class="checkbox__icon"></span>
+                                        <span class="checkbox__text">I agree with the <a href="#">privacy policy</a></span>
+                                    </label>
+                                </div>
+                            </div>                                                                                          
+                        </section>
+                        <section class="checkout-form">
+                            <button type="button" style="background-color: #0b5ed7;" onclick="opendelivery()" id='drop-btn' class="btn btn-secondary btn-lg btn-block">get your current delivery address < </button>
+                            <button type="button" style="background-color: #5c636a;" onclick="opendelivery2()" id='drop-btn2' class="btn btn-primary btn-lg btn-block">add a new delivery address < </button>
+                            <form method="POST" novalidate>
+                                <div class="checkout-form__cols">
+                                    <div class="checkout-form__col">
+                                        <div class="selectize">
+                                            {{ addressForm.country }}
+                                        </div>
+                                    </div>
+                                    <div class="checkout-form__col">
+                                           {{addressForm.city}}    
+                                    </div>                                    
+                                </div>
+                                {{ addressForm.address }}
+                                <div class="checkout-form__cols">
+                                    <div class="checkout-form__col">
+                                        {{addressForm.ZipCode}}
+                                    </div>                              
+                                </div>
+                                 {{addressForm.Order_Comment}}
+                                <div id='check_default' class="checkout-form__checkboxes">
+                                    <div class="checkout-form__checkbox checkbox">
+                                            {{addressForm.isDefault}}
+                                            <span class="checkbox__text">make this address default</span>
+                                    </div>                                                                        
+                                </div>
+                                <div class="captcha">
+                                    <img alt="" src="assets/img/examples/captcha.png">
+                                </div>
+                                <div class="checkout-form__buttons">
+                                    <div class="checkout-form__button-col">
+                                        <a class="checkout-form__back back-button" href="#">return</a>
+                                    </div>
+                                    <div class="checkout-form__button-col">
+                                        <button type="submit" class="checkout-form__button button">
+                                            <span class="button__text">continue</span>
+                                        </button>
+                                    </div>                                    
+                                </div>
+                            </form>
+                        </section> 
+
+                    </form>       
+                    
+                </section> 
+
+
+                </div>
+                <!-- LEFT COLUMN END -->
+
+                <!-- BEGIN RIGHT COLUMN -->
+                <aside class="checkout-page__right">
+                    <section class="your-order">
+                        <h3 class="your-order__title">Your order</h3>
+                        <div class="side-cart">
+                            {% for item in items %}
+                            <article class="side-cart__item">
+                                <div class="side-cart__cols">
+                                    <div class="side-cart__left">
+                                        <a class="side-cart__image-link" href="{% url 'home:product' item.product.id %}">
+                                            <img class="side-cart__image" src="{{item.product.PRDImg.url}}" alt="">
+                                        </a>
+                                    </div>
+                                    <div class="side-cart__right">
+                                        <h4 class="side-cart__title">
+                                            <a class="side-cart__link" href="{% url 'home:product' item.product.id %}">{{item.product.PRDName}}</a>
+                                        </h4>
+                                        <span class="side-cart__text">x{{item.quantity}}</span>
+                                        <div class="side-cart__prices">
+                                            <span class="side-cart__price">{{item.product.PRDPrice}}</span>
+                                            <span class="side-cart__old-price">{{item.product.PRDCost}}</span>
+                                        </div>
+                                    </div>                                        
+                                </div>
+                            </article>            
+                            {% endfor %}                
+                        </div>
+                        <ul class="your-order__list">
+                            <li class="your-order__item">
+                                <div class="your-order__col">
+                                    <span class="your-order__text">Оrder price</span>
+                                </div>
+                                <div class="your-order__col">
+                                    <span class="your-order__price">${{order.getCart_total}}</span>
+                                </div>                                
+                            </li>
+                            <li class="your-order__item">
+                                <div class="your-order__col">
+                                    <span class="your-order__text">Discount for promo&nbsp;code</span>
+                                </div>
+                                <div class="your-order__col">
+                                    <span class="your-order__text">No</span>
+                                </div>                                
+                            </li>
+                            <li class="your-order__item">
+                                <div class="your-order__col">
+                                    <span class="your-order__text">Delivery&nbsp;&nbsp;<span>(Aug 02 at 16:00)</span></span>
+                                </div>
+                                <div class="your-order__col">
+                                    <span class="your-order__price">${{order.getdelivery|floatformat:2 }}</span>
+                                </div>                                
+                            </li>                                                        
+                        </ul>
+                        <div class="your-order__bottom">
+                            <div class="your-order__col">
+                                <span class="your-order__bottom-text">Total</span>
+                            </div>
+                            <div class="your-order__col">
+                                <span class="your-order__bottom-price">${{order.get_total|floatformat:2 }}</span>
+                            </div>                            
+                        </div>
+                    </section>                        
+                </aside>
+                <!-- RIGHT COLUMN END -->                    
+
+            </div>
+
+        </div>
+        <!-- CHECKOUT END -->           
+
+
+        <script>
+        var country_default = document.getElementById("id_country");
+        var phone0_default = document.getElementById("id_phone_0");
+        var phone1_default = document.getElementById("id_phone_1");
+        var phone_default = document.getElementById("id_phone");
+        var fullname_default = document.getElementById("id_Fullname");
+        var address_default = document.getElementById("id_address");
+        var city_default = document.getElementById("id_city");
+        var ZipCode_default = document.getElementById("id_ZipCode");
+        var comment_default = document.getElementById("id_Order_Comment");
+        var is_default = document.getElementById("check_default");
+        function opendelivery(){
+            if (document.getElementById("drop-btn").textContent == 'get your current delivery address < '){
+                document.getElementById("drop-btn").textContent = 'get your current delivery address > ';
+                    country_default.value = '{{profile.country}}';
+                    address_default.value = '{{profile.address}}';
+                    city_default.value = '{{profile.city}}';
+                    ZipCode_default.value = '{{profile.ZipCode}}';
+                    is_default.style.display = 'none';
+                    is_default.attributes.add('checked');
+                    document.getElementsByName('isDefault').checked = true;
+                    is_default.removeAttribute('required');
+                    comment_default.value = '';
+                }
+            else{
+                document.getElementById("drop-btn").textContent = 'get your current delivery address < ';
+                country_default.value = '{{profile.country}}';
+                address_default.value = '{{profile.address}}';
+                city_default.value = '{{profile.city}}';
+                ZipCode_default.value = '{{profile.ZipCode}}';
+                is_default.style.display = 'none';
+                document.getElementsByName('isDefault').checked = true;
+                comment_default.value = '';
+            }
+        }
+        function opendelivery2(){
+            if (document.getElementById("drop-btn2").textContent == 'add a new delivery address < '){
+                document.getElementById("drop-btn2").textContent = 'add a new delivery address > ';
+                country_default.value = '';
+                address_default.value = '';
+                city_default.value = '';
+                ZipCode_default.value = '';
+                comment_default.value = '';
+                is_default.style.display = 'block';
+                is_default.value = 'False';
+            }
+            else{
+                    
+                country_default.value = '';
+                address_default.value = '';
+                city_default.value = '';
+                ZipCode_default.value = '';
+                document.getElementById("drop-btn2").textContent = 'add a new delivery address < ' ;
+                comment_default.value = '';
+                is_default.style.display = 'block';
+                is_default.value = 'False';
+
+                }
+            }
+        function closeAt(){
+            document.getElementById("disp").style.display = 'none'
+
+        }
+
+
+        country_default.classList.add("js-selectize-country");
+        phone0_default.classList.add("text-input","font-weight-normal","w-50","col-sm-3");
+        phone0_default.style.fontSize = '17px';
+        phone0_default.style.marginLeft = '27px';
+        phone1_default.placeholder = "+55";
+        phone1_default.style.fontSize = '17px';
+        phone1_default.classList.add("text-input", "font-weight-normal", "w-25","col-sm-5");
+        fullname_default.value = '{{profile.fullname}}';
+        phone0_default.placeholder = "668524786";
+        phone_default.value = "{{profile.phone}}";
+
+        
+
+
+        </script>
+    </main>
+    {% endblock content %}

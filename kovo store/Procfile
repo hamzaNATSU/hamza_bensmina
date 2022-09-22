@@ -1,0 +1,1 @@
+web: gunicorn eccomerce_project.wsgi --log-file -

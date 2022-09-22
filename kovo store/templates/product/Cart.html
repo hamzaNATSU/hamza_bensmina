@@ -1,0 +1,159 @@
+{% extends "base.html" %}
+    {% block content %}
+            <main class="main">
+             <!-- BEGIN CART -->
+             <div class="cart-page wrapper">
+
+                <div class="cart-page__cols">
+
+                    <!-- BEGIN LEFT COLUMN -->
+                    <div class="cart-page__left">
+                        {% if user.is_authenticated %}
+                        <div class="cart-table wishlist">
+                            {% if items %}
+                            {% for item in items %}
+
+                            <article class="wishlist__item js-remove">
+                                <div class="wishlist__cols">
+                                    <div class="wishlist__left">
+                                        <a class="wishlist__image-link" href="{% url 'home:product' item.product.id %}">
+                                            <img class="wishlist__image" src="{{item.product.PRDImg.url}}" alt="">
+                                        </a>
+                                    </div>
+                                    <div class="wishlist__right">
+                                        <div class="wishlist__top wishlist__top_cart">
+                                            <div class="wishlist__col">
+                                                <h2 class="wishlist__title">
+                                                    <a class="wishlist__link" href="{% url 'home:product' item.product.id %}"> {{item.product.PRDName}}</a>
+                                                </h2>
+                                            </div>
+                                            <div class="wishlist__col">
+                                                <button data-product={{item.product.id}} data-action="removeAT" class="wishlist__remove remove-button js-remove-button update-cart"></button>  
+                                            </div>                                    
+                                        </div>
+                                        <div class="wishlist__bottom wishlist__bottom_cart">
+                                            <div class="wishlist__cart-col">
+                                                <span class="wishlist__old-price">{{item.product.PRDCost}}$
+                                                </span>
+                                                <span class="wishlist__price wishlist__price_small">{{item.product.PRDPrice}}$</span> 
+                                            </div>
+                                            <div class="wishlist__cart-col">
+                                                <div class="wishlist__count count js-count">
+                                                    <button data-product={{item.product.id}} data-action="remove" onclick="location.reload()"  class="count__button count__button_minus js-count-minus update-cart"></button>
+                                                    <input class="count__input js-count-input" type="text" value="{{item.quantity}}" maxlength="4">
+                                                    <button data-product={{item.product.id}} data-action="add" onclick="location.reload()"  class="count__button count__button_plus js-count-plus update-cart"></button>
+                                                </div>                                    
+                                            </div>
+                                            <div class="wishlist__cart-col">
+                                                <span class="wishlist__price wishlist__price_total">{{item.getTotal}}$</span>
+                                            </div>                                                                        
+                                        </div>
+                                    </div>   
+                                </div>                                                                 
+                            </article>
+                            {% endfor %}
+                            {% else %}
+                                <p style="font-weight:bolder" >no items added</p>
+                            {% endif %}
+
+                            
+                        </div>
+                        <section class="promo">
+                            <div class="promo__top">
+                                <h3 class="promo__title">You have a promo&nbsp;code?</h3>
+                                <p class="promo__text">To receive up-to-date promotional codes, subscribe to us on social networks.</p>                                
+                            </div>
+                            <div class="promo-form">
+                                <div class="promo-form__left">
+                                    <input class="promo-form__input text-input" type="text" placeholder="Enter promo code">
+                                </div>
+                                <div class="promo-form__right">
+                                    <button class="promo-form__button button">
+                                        <span class="button__text">
+                                            <span class="button__arrow"></span>
+                                        </span>
+                                    </button>
+                                </div>
+                            </div>
+                        </section>
+                        {% else %}
+                        <section class="cart-table">
+                            <p>no items added</p>
+                        </section>
+                        {% endif %}
+                        <div class="cart-socials socials">
+                            <span class="cart-socials__text socials__text">Find us here:</span>
+                            <ul class="cart-socials__list socials__list">
+                                <li class="socials__item">
+                                    <a class="socials__link" target="_blank" href="https://web.facebook.com/profile.php?id=100022903321748">Fb</a>
+                                </li>
+                                <li class="socials__item">
+                                    <a class="socials__link" style="color:grey; cursor:default" href="#">Tw</a>
+                                </li> 
+                                <li class="socials__item">
+                                    <a class="socials__link" target="_blank" href="https://www.instagram.com/na_atssu/">Ins</a>
+                                </li>
+                                <li class="socials__item">
+                                    <a class="socials__link" style="color:gray ; cursor:default;" href="#">Pt</a>
+                                </li>                                                                     
+                            </ul>
+                        </div>                          
+                    </div>
+                        
+                    <!-- LEFT COLUMN END -->
+
+                    <!-- BEGIN RIGHT COLUMN -->
+                    <aside class="cart-page__right">
+                        <section class="your-order">
+                            <h3 class="your-order__title">Your order</h3>
+                            <ul class="your-order__list">
+                                <li class="your-order__item">
+                                    <div class="your-order__col">
+                                        <span class="your-order__text">Оrder price</span>
+                                    </div>
+                                    <div class="your-order__col">
+                                        <span class="your-order__price">${{order.getCart_total}}</span>
+                                    </div>                                
+                                </li>
+                                <!-- <li class="your-order__item">
+                                    <div class="your-order__col">
+                                        <span class="your-order__text">Discount for promo&nbsp;code</span>
+                                    </div>
+                                    <div class="your-order__col">
+                                        <span class="your-order__text">No</span>
+                                    </div>                                
+                                </li> -->
+                                <li class="your-order__item">
+                                    <div class="your-order__col">
+                                        <span class="your-order__text">Delivery&nbsp;&nbsp;<span>(Aug 02 at 16:00)</span></span>
+                                    </div>
+                                    <div class="your-order__col">
+                                        <span class="your-order__price">${{order.getdelivery|floatformat:2 }}</span>
+                                    </div>                                
+                                </li>                                                        
+                            </ul>
+                            <div class="your-order__bottom">
+                                <div class="your-order__col">
+                                    <span class="your-order__bottom-text">Total</span>
+                                </div>
+                                <div class="your-order__col">
+                                    <span class="your-order__bottom-price">${{order.get_total|floatformat:2 }}</span>
+                                </div>                            
+                            </div>
+                            {% if items|length != 0 %}
+                            <button class="your-order__button button">
+                                <a href="{% url 'home:checkout' %}" style="color: white;" class="button__text">Checkout</a>
+                            </button>
+                            {% else %}
+                            {% endif %}
+                        </section>
+                    </aside>
+                    <!-- RIGHT COLUMN END -->
+
+                </div>
+
+            </div>
+            </main>    
+
+    </div> 
+    {% endblock content %}

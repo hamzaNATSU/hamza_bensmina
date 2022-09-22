@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+
+    {% block content %}
+    {% load static%}
+    <main class="main"> 
+    <div class="contacts-page">
+        <div class="contacts-page__main wrapper">
+            <div class="contacts-page__cols">
+                <div class="contacts-page__left">
+                    <form action="{% url 'home:index' %}" method="POST">
+                        {% csrf_token %}
+                        <div class="contacts-form">
+                            <div class="contacts-form__top">
+                                <h2 class="contacts-form__title">Get In Touch</h2>
+                                <p class="contacts-form__text">Write us your impressions of&nbsp;the&nbsp;purchase</p>
+                            </div>
+                            <div class="contacts-form__cols">
+                                <div class="contacts-form__col">
+                                    {{cantactform.fullname}}
+                                </div>
+                                <div class="contacts-form__col">
+                                    {{cantactform.Email}}
+                                </div>                                        
+                            </div>
+                            {{ cantactform.feedback }}
+                            <button class="contacts-form__button button">
+                                <span class="button__text">Send a message</span>
+                            </button>                                    
+                        </div>
+                    </form>
+                </div>
+                <div class="contacts-page__right">
+                    <div class="contacts">
+                        <section class="contacts__item">
+                            <div class="contacts__left">
+                                <h3 class="contacts__title">contacts:</h3>
+                            </div>
+                            <div class="contacts__right">
+                                <a class="contacts__number" href="tel:+1888444777 ">+212 696765302 </a><br>
+                                <a class="contacts__link" href="mailto:sitename@gmail.com">hamzabensmina2002@gmail.com</a>
+                            </div>
+                        </section>
+                        <section class="contacts__item">
+                            <div class="contacts__left">
+                                <h3 class="contacts__title">location:</h3>
+                            </div>
+                            <div class="contacts__right">
+                                <span class="contacts__text">27 Division St, Casablanca, <br>10100, MA</span>
+                            </div>
+                        </section> 
+                        <section class="contacts__item">
+                            <div class="contacts__left">
+                                <h3 class="contacts__title">find us:</h3>
+                            </div>
+                            <div class="contacts__right">
+                                <div class="contacts__socials socials">
+                                    <ul class="socials__list">
+                                        <li class="socials__item">
+                                            <a class="socials__link" target="_blank" target="_blank" href="https://web.facebook.com/profile.php?id=100022903321748">Fb</a>
+                                        </li>
+                                        <li class="socials__item">
+                                            <a class="socials__link" style="color:grey ; cursor:default;" href="#">Tw</a>
+                                        </li> 
+                                        <li class="socials__item">
+                                            <a class="socials__link" target="_blank" href="https://www.instagram.com/na_atssu/">Ins</a>
+                                        </li>
+                                        <li class="socials__item">
+                                            <a class="socials__link" style="color:gray ; cursor:default;" href="#">Pt</a>
+                                        </li>                                                                           
+                                    </ul>
+                                </div>
+                            </div>
+                        </section>                                                                 
+                    </div>
+                </div>                    
+            </div>
+            <img class="contacts-page__vector" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=" data-lazy="{% static 'img/svg/vector-contacts.svg' %}" alt="">
+        </div>
+        <div class="contacts-page__map">
+            <iframe class='map' width="100%" height="600" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" id="gmap_canvas" src="https://maps.google.com/maps?width=749&amp;height=400&amp;hl=en&amp;q=%20Casablanca+(kovo%20store)&amp;t=&amp;z=12&amp;ie=UTF8&amp;iwloc=B&amp;output=embed"></iframe> <script type='text/javascript' src='https://embedmaps.com/google-maps-authorization/script.js?id=6de32bdd273e5dc2e19e06f656f6089483b540b6'></script>        </div>
+    </div>
+    </main>
+    <script>
+        var style = [ { featureType: "landscape", stylers: [ { color: "#D8E146" } ] } ]
+    </script>
+    {% endblock content %}

@@ -1,0 +1,323 @@
+input#id_PRDPrice_0{
+    border: solid 1px grey;
+    width: 29px;
+    margin-right: 19px ;
+}
+input#id_PRDPrice_1{
+    margin-left: 19px ;
+    border: solid 1px grey;
+    width: 29px;
+}
+label.widget{
+    display:none;
+}
+.ui-slider .ui-slider-handle {
+	position: absolute;
+	z-index: 2;
+	width: 14px;
+	height: 14px;
+	cursor: default;
+	-ms-touch-action: none;
+	touch-action: none;
+}
+
+.ui-slider-horizontal {
+	height: 3px;
+}
+.ui-slider-horizontal .ui-slider-handle {
+	top: -.3em;
+	margin-left: -.6em;
+}
+.ui-slider-horizontal .ui-slider-range {
+	top: 0;
+	height: 3px;
+}
+.ui-slider-horizontal .ui-slider-range-min {
+	left: 0;
+	font-family: Arial,Helvetica,sans-serif;
+	font-size: 1em;
+}
+.ui-widget.ui-widget-content {
+	border: 1px solid #c5c5c5;
+	/* border: 1px solid #191717; */
+}
+.ui-widget-content {
+	border: 1px solid #dddddd;
+	background: #ffffff;
+	color: #aeff0e;
+}
+.ui-widget-header {
+	border: 1px solid #dddddd;
+	background: #e29632;
+	color: #333333;
+	font-weight: bold;
+	height: 6px;
+}
+.ui-widget-header a {
+	color: #333333;
+}
+/* We use html here because we need a greater specificity to make sure disabled
+works properly when clicked or hovered */
+.ui-button.ui-state-disabled:hover,
+.ui-button.ui-state-disabled:active {
+	border: 1px solid #c5c5c5;
+	background: #ff8e8e;
+	font-weight: normal;
+	color: #454545;
+}
+.ui-state-default, .ui-widget-content .ui-state-default {
+	border: 1px solid #c5c5c5;
+	background: #ff8e8e;
+	font-weight: normal;
+	color: #454545;
+}
+.numeric-slider .ui-widget-header{
+
+    background: #ff8e8e;
+
+}
+.form-group {
+    width: 230px;
+}
+.short-item__image {
+    width: 265px;
+	height: 255px;
+}
+#id_PRDBrand li {
+    margin-bottom: 27px;
+    font-family: monospace;
+    font-size: 17px;
+}
+span.message_alert {
+    border: 1px solid #e84e4f;
+    margin-top: 129px;
+    /* width: 269px; */
+    padding: 4px;
+    font-size: 14px;
+    background-color: #9c2b2e;
+    color: white;
+}
+input#id_username ,input#id_password {
+	width: 100%;
+    height: 50px;
+    margin: 0 0 20px;
+    padding: 7px 0 13px;
+    display: block;
+    font: 14px/1 Raleway,sans-serif;
+    background: #fff;
+    color: #000;
+    border-bottom: 1px solid rgba(68,68,68,.2);
+    -webkit-transition: .3s ease-out;
+    -ms-transition: .3s ease-out;
+    transition: .3s ease-out;
+}
+input#id_username:focus,input#id_password:focus{
+	border-color: #000;
+}
+span.profile_user {
+    color: black;
+    font-family: monospace;
+    font-size: 17px;
+    font-weight: 900;
+}
+span.profile_user:hover {
+
+	border-bottom: 1px solid black;
+}
+.hide-nav2{
+	margin: -1px 0 0;
+    padding: 20px 0 0;
+    display: none;
+    position: absolute;
+    top: 64%;
+    left: 75%;
+}
+.dropdown-toggle::after {
+    display: none;
+}
+.mb-0{
+	font:initial;
+}
+.mt-3 {
+    width: 200px;
+}
+.text-muted{
+margin-top: -14px;
+height: 80px;
+}
+ .card{
+    border:none;
+	padding: 0 6px 0 0;
+}
+.profile-page{
+	padding-top: 0px;
+
+}
+.avatar {
+    margin-left: 35px;
+}
+.profile-tab{
+    height: 429px;
+}
+.reverse{
+    display: flex;
+    flex-direction: column-reverse;
+
+}
+.text-input{
+    font-family: 'Josefin Sans';
+}
+
+span.phone-field-ext {
+    flex: 0 0;
+}
+input#id_phone_1{
+    width:13%;
+}
+
+.selectize .selectize-input {
+    width: 100%;
+    max-width: 100%;
+    height: 49px!important;
+    padding: 0 30px 10px 0!important;
+    display: block;
+    position: relative;
+    border-bottom: 1px solid rgba(68,68,68,.2);
+    -webkit-transition: .3s ease-out;
+    -ms-transition: .3s ease-out;
+    transition: .3s ease-out;
+    font: 14px/40px Raleway,sans-serif;
+    color: #000;
+
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.7);
+    transition: opacity 500ms;
+    visibility: visible;
+    opacity: 1;
+  }
+  .overlay:target {
+    visibility: visible;
+  }  
+.popup {
+    margin: 70px auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 5px;
+    width: 30%;
+    position: relative;
+    transition: all 5s ease-in-out;
+  }
+  
+  .popup h2 {
+    margin-top: 0;
+    color: #333;
+    font-family: Tahoma, Arial, sans-serif;
+  }
+  .popup .close {
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    transition: all 200ms;
+    font-size: 30px;
+    font-weight: bold;
+    text-decoration: none;
+    color: #333;
+  }
+  .popup .close:hover {
+    color: #06D85F;
+  }
+  .popup .content {
+    max-height: 30%;
+    overflow: auto;
+  }
+  
+  @media screen and (max-width: 700px){
+    .box{
+      width: 70%;
+    }
+    .popup{
+      width: 70%;
+    }
+  }
+  #tab2{
+      display: block;
+  }
+  #tab1{
+      display: none;
+  }
+  #tab3{
+      display: none;
+  }
+  .card{
+    border:none;
+  }
+  .w-75.ml-2 {
+    text-align: center;
+    margin-left: 60px;
+}
+
+.reviewed__image {
+    width: 82%;
+}
+.pass_show{position: relative} 
+
+.pass_show .ptxt { 
+
+position: absolute; 
+
+top: 50%; 
+
+right: 10px; 
+
+z-index: 1; 
+
+color: #f36c01; 
+
+margin-top: -10px; 
+
+cursor: pointer; 
+
+transition: .3s ease all; 
+
+} 
+
+.pass_show .ptxt:hover{color: #333333;} 
+
+.mt{
+    margin-top: 80px;
+
+}
+.email
+{
+    background: linear-gradient(
+45deg
+, #00000017, transparent);
+    color: white;
+    opacity: 90%;
+    border-radius: 25px;
+}
+.newsletter__bg{
+    border-radius: 20px;
+}
+.map {
+    -webkit-filter: grayscale(100%);
+       -moz-filter: grayscale(100%);
+        -ms-filter: grayscale(100%);
+         -o-filter: grayscale(100%);
+            filter: grayscale(100%);
+}
+
+@media screen and (max-width: 767px){
+.profile-page__right {
+    width: auto;
+    padding: 0;
+    margin-top: 400px;
+}
+}

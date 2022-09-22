@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+    {% block content %}
+    <main class="main">
+    <div class="login-page">
+        <div class="login-page__all">
+            <div class="login-page__banner" data-bg=""></div>
+            <div class="login-page__main">
+                <form method="POST">
+                    {% csrf_token %}
+                    <div class="login-form login-form_reg">
+                        <div class="login-form__top">
+                            <h2 class="login-form__title">Register now</h2>
+                            <p class="login-form__text">For your convenience, we have made it possible to register via social networks.</p>
+                        </div>
+                        <ul class="socials-nav">
+                            <li class="socials-nav__item">
+                                <a class="socials-nav__link socials-nav__link_icon-1" href="#"></a>
+                            </li>
+                            <li class="socials-nav__item">
+                                <a class="socials-nav__link socials-nav__link_icon-2" href="#"></a>
+                            </li>  
+                            <li class="socials-nav__item">
+                                <a class="socials-nav__link socials-nav__link_icon-3" href="#"></a>
+                            </li>
+                            <li class="socials-nav__item">
+                                <a class="socials-nav__link socials-nav__link_icon-4" href="#"></a>
+                            </li>                                                                       
+                        </ul>
+                        {% if err == True %}
+                        <div class="alert alert-danger" role="alert">
+                            Please check your informations... Something wrong!
+                          </div>
+                          {% endif %}
+                        <div class="login-form__cols">
+                            <div class="login-form__col">
+                                {{form.username}}
+                            </div>                                    
+                        </div>
+                        <div class="login-form__cols">
+                            <div class="login-form__col">
+                                {{form.email}}
+                            </div>                                    
+                        </div>
+                        <span class="login-form__label">{{form.password1.label}}</span>
+                        <div class="login-form__cols">
+                            <div class="login-form__col">
+                               {{form.password1}}
+                            </div>
+                            <div class="login-form__col">
+                                {{form.password2}}
+                            </div>                                    
+                        </div>                                
+                        <div class="login-form__bottom">
+                            <div class="login-form__col">
+                                <div class="login-form__checkbox checkbox">
+                                    <label class="checkbox__label">
+                                        <input class="checkbox__input" type="checkbox" required>
+                                        <span class="checkbox__icon"></span>
+                                        <span class="checkbox__text">I agree with the <a href="#">Privacy policy</a></span>
+                                    </label>
+                                </div>                                        
+                            </div>
+                            <div class="login-form__col">
+                                <span class="login-form__small-text">
+                                    Already have an account? Then&nbsp;<a href="#">log&nbsp;in</a>
+                                </span>
+                            </div>                                    
+                        </div>
+                        <button class="login-form__button button" type="submit">
+                            <span class="button__text">Check in</span>
+                        </button>
+                    </div>
+        </form>
+</main>
+{% endblock content %}
+            

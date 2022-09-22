@@ -1,0 +1,391 @@
+{% extends 'base.html' %}
+
+    {% block content %}
+    {% load static %}
+        <!-- BEGIN MAIN -->
+        <main class="main">              
+
+            <!-- BEGIN FIRST SCREEN -->
+            <div class="first-screen">
+                <div class="first-screen__left">
+                    <div class="first-screen__mob-cols">
+                        <div class="first-screen__mob-col">
+                            <div class="slider-count">
+                                <span class="slider-count__text js-main-count"><span>1</span>/3</span>
+                            </div>  
+                        </div>
+                        <div class="first-screen__mob-col">
+                            <ul class="first-screen__socials side-socials">
+                                <li class="side-socials__item">
+                                    <a class="side-socials__link" target="_blank" href="https://web.facebook.com/profile.php?id=100022903321748">Fb</a>
+                                </li>
+                                <li class="side-socials__item">
+                                    <a class="side-socials__link" style="color:grey; cursor:default;" href="#">Tw</a>
+                                </li> 
+                                <li class="side-socials__item">
+                                    <a class="side-socials__link" target="_blank" href="https://www.instagram.com/na_atssu/">Ins</a>
+                                </li>
+                                <li class="side-socials__item">
+                                    <a class="side-socials__link" style="color:gray ; cursor:default;" href="#">Pt</a>
+                                </li>     
+                            </ul>                        
+                        </div>
+                        <div class="first-screen__mob-col js-to-1"></div>                            
+                    </div>                                                     
+                </div>
+                <div class="first-screen__center">
+                    <div class="main-slider">
+                        <div class="main-slider__list-wrap">
+                            <div class="main-slider__list js-main-slider loaded">
+                                {%for CLT in newest_collections%}
+                                <div class="main-slider__item js-slide active">
+                                    <div class="main-slider__max">
+                                        <div class="main-slider__row">
+                                            <div class="main-slider__cell">
+                                                <div class="main-slider__content">
+                                                    <span class="main-slider__subtitle category-subtitle"><b>new</b> collection</span>
+                                                    <h2 class="main-slider__title">{{CLT.CLTName}} <br>{{CLT.CLTName2}}</h2>
+                                                    <a class="main-slider__button button" href="{% url 'home:shop' 'products-0' %}">
+                                                        <span class="button__text">Shop now</span>
+                                                    </a>
+                                                </div>
+                                                <div class="main-slider__image-wrap">
+                                                    <div class="main-slider__image" data-bg="{{CLT.CLTImg.url}}"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        <div class="main-slider__bg-wrap">
+                            <img class="main-slider__bg" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=" data-lazy="{% static 'img/svg/vector-first-screen.svg' %}" alt="">
+                            <div class="scroll-down">
+                                <span class="scroll-down__icon"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="first-screen__right js-from-1">
+                    <div class="slider-dots dots-1 js-main-dots"></div>
+                    <div class="slider-arrows arrows-1 js-main-arrows js-content-1"></div>
+                </div>
+            </div>
+            <!-- FIRST SCREEN END -->
+
+            <!-- BEGIN COLLECTION -->
+            <!-- COLLECTION END -->
+
+            <!-- BEGIN PRODUCTS -->
+            <section class="main-block wrapper">
+                <div class="main-block__top">
+                    <span class="main-block__subtitle category-subtitle"><b>new</b> collections</span>
+                    <h3 class="main-block__title">Featured products</h3>
+                </div>
+                <div class="products-nav tabs-nav js-line">
+                    <ul class="tabs-nav__list">
+                        <li class="tabs-nav__item js-tabs-item js-line-item active">
+                            <a class="tabs-nav__link js-line-link js-tabs-link" href="#products-0">All</a>
+                        </li>
+                        {% for Cat in Parent %}
+                        <li class="tabs-nav__item js-tabs-item js-line-item">
+                            <a class="tabs-nav__link js-line-link js-tabs-link" href="#products-{{Cat.id}}">{{Cat.PRDCat}}</a>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                    <div class="tabs-nav__line js-line-element"></div>
+                </div>
+                <!-- BEGIN TAB 1 -->
+                <div class="product-tab js-tabs-content active" id="products-0">
+                    <div class="main-catalog">
+                        <div class="main-catalog__list">  
+                            {% for product in product_list|slice:":8" %}
+                                <article class="short-item">
+                                    <div class="short-item__all">
+                                        <a class="short-item__image-bg" href="{% url 'home:product' product.id %}">
+                                            <img class="short-item__image" style="width: 265px;height: 255px;object-fit: inherit;"  src="{{product.PRDImg.url}}" alt="">
+                                        </a>
+                                        <div class="short-item__top">
+                                            <div class="short-item__cols">
+                                                <div class="short-item__col">
+                                                {% if product.PRDCost > 0 %}
+                                                    <span class="item-tag item-tag_red">Sale</span>
+                                                {% else %}
+                                                {% endif %}
+                                                {% if product in Product_new %}
+                                                    <span class="item-tag item-tag_green">New</span>
+                                                {% else %}
+                                                {% endif %}
+                                                </div>
+                                                <div class="short-item__col">
+                                                    {% if product in FVRT %}
+                                                    <button data-action="defavorite"  data-product={{product.id}} id="fav-button" onclick="fav_defav()" class="heart-button js-toggle-active update-cart active"></button>
+                                                    {% else  %}
+                                                    <button data-action="favorite"  data-product={{product.id}} id="fav-button" onclick="fav_defav()" class="heart-button js-toggle-active update-cart"></button>
+                                                    {% endif %}
+                                                </div>                                        
+                                            </div>
+                                        </div>
+                                        <h4 class="short-item__title">
+                                         <a class="short-item__link" href="{% url 'home:product' product.id %}">{{product.PRDName}}</a>
+                                        </h4>
+                                        <span class="short-item__price">{{product.PRDPrice}} $</span>
+                                    </div>
+                                </article>   
+                            {% endfor %}                           
+                        </div>
+                        <img class="main-catalog__bg" src="{% static 'img/svg/vector-catalog.svg'%}"alt="">
+                    </div>    
+                </div>  
+                {% for Cat in Parent %}
+                 <div class="product-tab js-tabs-content" id="products-{{Cat.id}}">
+                    {%for Cat2 in Cat_Sec%}
+                    {%if Cat2.PRDCat_Parent == Cat %}
+                    <div class="main-catalog">
+                        <div class="main-catalog__list">  
+                                 {% for product in product_list%}
+                                    {% if product.PRDCat == Cat2 %}
+                                <article class="short-item">
+                                    <div class="short-item__all">
+                                          <a class="short-item__image-bg" href="{% url 'home:product' product.id %}">
+                                            <img class="short-item__image" style="width: 265px;height: 255px;object-fit: inherit;" src="{{product.PRDImg.url}}" alt="">
+                                        </a>
+                                        <div class="short-item__top">
+                                            <div class="short-item__cols">
+                                                <div class="short-item__col">
+                                                    {% if product.PRDCost > 0 %}
+                                                    <span class="item-tag item-tag_red">Sale</span>
+                                                    {% else %}
+                                                    {% endif %}
+                                                    {% if product in Product_new %}
+                                                    <span class="item-tag item-tag_green">New</span>
+                                                    {% else %}
+                                                    {% endif %}
+                                                </div>
+                                                <div class="short-item__col">
+                                                    {% if product in FVRT %}
+                                                    <button data-action="defavorite"  data-product={{product.id}} id="fav-button" onclick="fav_defav()" class="heart-button js-toggle-active update-cart active"></button>
+                                                    {% else  %}
+                                                    <button data-action="favorite" data-product={{product.id}} id="fav-button" onclick="fav_defav()" class="heart-button js-toggle-active update-cart"></button>
+                                                    {% endif %}                                                </div>                                        
+                                            </div>
+                                        </div>
+                                        <h4 class="short-item__title">
+                                            <a class="short-item__link" href="{% url 'home:product' product.id %}">{{product.PRDName}}</a>
+                                        </h4>
+                                        <span class="short-item__price">{{product.PRDPrice}} $</span>
+                                    </div>
+                                </article>
+                                  {% else %}
+                                {% endif %}
+                                {% endfor %}                               
+                        </div>
+                        <img class="main-catalog__bg" src="{% static 'img/svg/vector-catalog.svg'%}"alt="">
+                    </div>
+                    {% else %} 
+                    {% endif %}   
+                    {% endfor %}     
+                </div>            
+                {% endfor %}        
+            
+                <!-- TAB 1 END -->            
+                <div class="load-more">
+                    <a class="button" href="{% url 'home:shop' '0' %}">
+                        <span class="button__text">See all products</span>
+                    </a>
+                </div>
+            </section>
+            <!-- PRODUCTS END -->
+
+            <!-- BEGIN DEAL OF THE WEEK -->
+            <section class="deal-block">
+                <div class="deal-block__cols">
+                    <div class="deal-block__col">
+                        <div class="deal-block__image" data-bg="{{deal.DlImg.url}}"></div>
+                        <div class="deal-block__content">
+                            <div class="deal-block__row">
+                                <div class="deal-block__cell">
+                                    <span class="deal-block__subtitle category-subtitle"><b> deal</b> of the week</span>
+                                    <h3 class="deal-block__title">{{deal.DLName|linebreaksbr}}</h3>
+                                    <div class="timer js-timer"></div>
+                                    <a class="deal-block__button button" href="{% url 'home:shop' 'all' %}#products-1">
+                                        <span class="button__text">Shop now</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <img class="deal-block__bg" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=" data-lazy="{% static 'img/svg/vector-deal.svg' %}" alt="">
+                    </div>
+                </div>
+            </section>
+            <!-- BEGIN DEAL OF THE WEEK END -->    
+            
+            <!-- BEGIN ADVANTAGES -->
+            <div class="advantages wrapper">
+                <div class="advantages__list">
+                    <article class="advantage">
+                        <div class="advantage__content">
+                            <div class="advantage__icon-wrap">
+                                <img class="advantage__icon" src="{% static 'img/svg/free_shipping.png' %}" alt="">
+                            </div>
+                            <h4 class="advantage__title">Free Shipping</h4>
+                            <div class="advantage__line"></div>
+                            <p class="advantage__text">Non aliqua reprehenderit reprehenderit culpa laboris nulla minim anim velit</p>
+                        </div>
+                        <img class="advantage__bg" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=" data-lazy="{% static 'img/svg/vector-advantages.svg' %}" alt="">
+                    </article>
+                    <article class="advantage">
+                        <div class="advantage__content">
+                            <div class="advantage__icon-wrap">
+                                <img class="advantage__icon" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=" data-lazy="{% static 'img/svg/7.png' %}" alt="">
+                            </div>
+                            <h4 class="advantage__title">24/7 Customer Service</h4>
+                            <div class="advantage__line"></div>
+                            <p class="advantage__text">Non aliqua reprehenderit reprehenderit culpa laboris nulla minim anim velit </p>
+                        </div>
+                        <img class="advantage__bg" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=" data-lazy="{% static 'img/svg/vector-advantages.svg' %}" alt="">
+                    </article>
+                    <article class="advantage">
+                        <div class="advantage__content">
+                            <div class="advantage__icon-wrap">
+                                <img class="advantage__icon" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=" data-lazy="{% static 'img/svg/garunthe.png' %}" alt="">
+                            </div>
+                            <h4 class="advantage__title">Money Back Guarantee</h4>
+                            <div class="advantage__line"></div>
+                            <p class="advantage__text">Non aliqua reprehenderit reprehenderit culpa laboris nulla minim anim velit </p>
+                        </div>
+                        <img class="advantage__bg" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=" data-lazy="{% static 'img/svg/vector-advantages.svg' %}" alt="">
+                    </article>                                        
+                </div>
+            </div>
+            <!-- ADVANTAGES END -->
+
+            <!-- BEGIN BEST SELLERS -->
+            <section class="main-block wrapper">
+                <div class="main-block__top">
+                    <span class="main-block__subtitle category-subtitle"><b>top</b> products</span>
+                    <h3 class="main-block__title">Best sellers at Mollee</h3>
+                    <p class="main-block__text">Cillum eu id enim aliquip aute ullamco anim. Culpa deserunt nostrud excepteur voluptate velit ipsum esse enim.</p>
+                </div>
+                <div class="catalog-slider js-catalog loaded">
+                    <div class="catalog-slider__list-wrap">
+                        <div class="catalog-slider__list js-catalog-carousel">
+                            {% for product in product_list|slice:":12" %}
+                            <article class="short-item">
+                                <div class="short-item__all">
+                                    <a class="short-item__image-bg" href="{% url 'home:product' product.id %}">
+                                        <img class="short-item__image" src="{{product.PRDImg.url}}" alt="">
+                                    </a>
+                                    <div class="short-item__top">
+                                        <div class="short-item__cols">
+                                            <div class="short-item__col">
+                                                {% if product.PRDCost > 0 %}
+                                                <span class="item-tag item-tag_red">Sale</span>
+                                                {% else %}
+                                                {% endif %}
+                                                {% if product in Product_new %}
+                                                <span class="item-tag item-tag_green">New</span>
+                                                {% else %}
+                                                {% endif %}
+                                            </div>
+                                            <div class="short-item__col">
+                                                {% if product in FVRT %}
+                                                <button data-action="defavorite"  data-product={{product.id}} id="fav-button" onclick="fav_defav()" class="heart-button js-toggle-active update-cart active"></button>
+                                                {% else  %}
+                                                <button data-action="favorite" data-product={{product.id}} id="fav-button" onclick="fav_defav()" class="heart-button js-toggle-active update-cart"></button>
+                                                {% endif %}
+                                            </div>                                        
+                                        </div>
+                                    </div>
+                                    <h4 class="short-item__title">
+                                        <a class="short-item__link" href="{% url 'home:product' product.id %}">{{product.PRDName}}</a>
+                                    </h4>
+                                    <span class="short-item__price">${{product.PRDPrice}}</span>
+                                    <span class="short-item__old-price">${{product.PRDCost}}</span>
+                                </div>
+                            </article>                               
+                            {% endfor %}                        
+                        </div>
+                    </div>
+                    <div class="catalog-slider__cols">
+                        <div class="catalog-slider__col">
+                            <button class="prev-button js-catalog-prev"></button>
+                        </div>
+                        <div class="catalog-slider__col dots-2 js-catalog-dots">
+                                               
+                        </div>
+                        <div class="catalog-slider__col">
+                            <button class="next-button js-catalog-next"></button>
+                        </div>                                                
+                    </div>
+                    <div class="load-icon"></div>
+                    <img class="catalog-slider__bg" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=" data-lazy="{% static 'img/svg/vector-catalog.svg' %}" alt="">
+                </div>
+            </section>
+            <!-- BEST SELLERS END -->
+
+            <!-- BEGIN BLOG -->
+            <!-- <section class="main-block wrapper">
+                <div class="main-block__top">
+                    <span class="main-block__subtitle category-subtitle">our <b>blog</b></span>
+                    <h3 class="main-block__title">the last in Mollee</h3>
+                    <p class="main-block__text">Cillum eu id enim aliquip aute ullamco anim. Culpa deserunt nostrud excepteur voluptate velit ipsum esse enim.</p>
+                </div>
+                <div class="blog">
+                    <article class="short-post">
+                        <div class="short-post__all">
+                            <a class="short-post__image-link" href="post.html">
+                                <div class="short-post__image" data-bg="https://via.placeholder.com/555x300"></div>
+                            </a>
+                            <div class="short-post__row">
+                                <div class="short-post__cell">
+                                    <div class="short-post__bg">
+                                        <div class="short-post__content">
+                                            <div class="short-post__title-wrap">
+                                                <h4 class="short-post__title">
+                                                    <a class="short-post__link" href="post.html">Fashion trends in 2020: style, colors, accessories</a>
+                                                </h4>
+                                            </div>
+                                            <span class="short-post__date">Aug 02, 2020</span>
+                                            <a class="short-post__more read-more" href="post.html">read more</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </article>  
+                    <article class="short-post">
+                        <div class="short-post__all">
+                            <a class="short-post__image-link" href="post.html">
+                                <div class="short-post__image" data-bg="https://via.placeholder.com/555x300"></div>
+                            </a>
+                            <div class="short-post__row">
+                                <div class="short-post__cell">
+                                    <div class="short-post__bg">
+                                        <div class="short-post__content">
+                                            <div class="short-post__title-wrap">
+                                                <h4 class="short-post__title">
+                                                    <a class="short-post__link" href="post.html">The most popular brand that people use in USA</a>
+                                                </h4>
+                                            </div>
+                                            <span class="short-post__date">Aug 02, 2020</span>
+                                            <a class="short-post__more read-more" href="post.html">read more</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </article>                                                                            
+                </div>
+                <div class="load-more">
+                    <a class="button" href="blog.html">
+                        <span class="button__text">Read blog</span>
+                    </a>
+                </div>                
+            </section> -->
+            <!-- BLOG END -->
+
+        </main>
+        <!-- MAIN END -->
+        {% endblock content %}
